@@ -1,5 +1,7 @@
 """Fetch reference population allele frequencies by rsID only. Never transmit personal genotypes."""
 import json
+import time
+import socket
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
@@ -40,16 +42,63 @@ def extract_frequencies(payload, allele):
         rows.append({'Population': name, 'Code': code, 'Region': region, 'Allele frequency': freq, 'Latitude': lat, 'Longitude': lon, 'Source': population})
     return sorted(rows, key=lambda r: r['Region'] + r['Population'])
 
-def fetch_frequencies(rsid, allele, timeout=8):
-    if not (rsid.startswith('rs') and rsid[2:].isdigit()):
+class PopulationLookupError(RuntimeError):
+    """An actionable, non-sensitive public reference lookup failure."""
+
+
+def fetch_frequencies(rsid, allele, timeout=12, opener=urlopen, sleeper=time.sleep):
+    """Query public Ensembl services with transient-error retries and clear diagnostics.
+
+    Only an rsID is sent. Never send genotype, DNA contents, or user identifiers.
+    """
+    if not (isinstance(rsid, str) and rsid.startswith('rs') and rsid[2:].isdigit()):
         raise ValueError('Invalid rsID')
+    allele = str(allele).upper()
     if allele not in ('A', 'C', 'G', 'T'):
         raise ValueError('Select a single DNA letter')
-    url = f'https://rest.ensembl.org/variation/human/{rsid}?pops=1'
-    request = Request(url, headers={'Accept': 'application/json', 'User-Agent': 'HelixExplorerEducational/1.0'})
-    try:
-        with urlopen(request, timeout=timeout) as response:
-            data = json.load(response)
-    except (URLError, HTTPError, TimeoutError, ValueError) as exc:
-        raise RuntimeError('Population reference data could not be retrieved. Please try again later.') from exc
-    return extract_frequencies(data, allele)
+
+    endpoints = ('https://rest.ensembl.org', 'https://grch37.rest.ensembl.org')
+    errors = []
+    for host in endpoints:
+        # Ensembl documents pops=1 and the JSON Content-Type header.
+        url = f'{host}/variation/human/{rsid}?pops=1'
+        for attempt in range(2):
+            request = Request(url, headers={
+                'Accept': 'application/json', 'Content-Type': 'application/json',
+                'User-Agent': 'HelixExplorerEducational/2.1',
+            })
+            try:
+                with opener(request, timeout=timeout) as response:
+                    payload = json.load(response)
+                if not isinstance(payload, dict):
+                    raise ValueError('Invalid JSON response structure')
+                if 'error' in payload:
+                    raise ValueError('API error: ' + str(payload['error'])[:120])
+                rows = extract_frequencies(payload, allele)
+                if rows:
+                    return rows
+                # Successful response with no matching data is not a network outage.
+                errors.append(f'{host}: no matching 1000 Genomes Phase 3 allele data')
+                break
+            except HTTPError as exc:
+                errors.append(f'{host}: HTTP {exc.code}')
+                if exc.code in (429, 500, 502, 503, 504) and attempt == 0:
+                    sleeper(1)
+                    continue
+                break
+            except (URLError, TimeoutError, socket.timeout, OSError) as exc:
+                errors.append(f'{host}: connection/timeout ({type(exc).__name__})')
+                if attempt == 0:
+                    sleeper(1)
+                    continue
+                break
+            except (ValueError, UnicodeError) as exc:
+                errors.append(f'{host}: invalid response ({str(exc)[:90]})')
+                break
+    if errors and all('no matching' in e for e in errors):
+        return []
+    raise PopulationLookupError(
+        'Could not load published population frequencies for ' + rsid + '. '
+        + 'Details: ' + '; '.join(errors[-4:]) + '. '
+        + 'Your genetic result is still valid as displayed; the geographic chart is temporarily unavailable.'
+    )

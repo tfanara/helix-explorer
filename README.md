@@ -93,3 +93,6 @@ The geography page now focuses entirely on the combined-marker comparison. The s
 
 ### Trait-level geography (new)
 Each interpreted result now has an optional **Where is this genetic variation found?** panel. Select an allele present in the uploaded genotype and click to retrieve 1000 Genomes Phase 3 allele frequencies via Ensembl, view a percentage chart and a map of reference sample locations. No additional uploads. Only the public rsID and allele are used for the public lookup, not the user's DNA file. This does not estimate personal ancestry, exact genotype frequency, or trait probability. Internet access to Ensembl is required, and some variants lack data.
+
+### Population lookup reliability update
+The individual-trait geography viewer now uses Ensembl's documented `pops=1` endpoint with explicit JSON headers, retries transient errors, tries a second Ensembl host, distinguishes missing population data from connection failures, and displays diagnostic HTTP status codes without exposing uploaded DNA. It still needs network access from Streamlit Community Cloud. No population frequencies are fabricated.
