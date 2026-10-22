@@ -68,3 +68,9 @@ The **FAQ** tab is available even before a DNA upload. It includes searchable pl
 ## Genotype-aware interpretations
 
 The trait browser and gene search now use curated genotype-specific headlines for HERC2, SLC24A5, ABCC11, LCT/MCM6, CYP1A2, ACTN3, FTO and FUT2. CFTR N1303K retains its separate clinically cautious handling. Other research markers explicitly state that no reliable individual prediction is available. Caffeine A/C is **not** labeled as definitively fast or slow. These are educational associations, not validated health predictions.
+
+## New in this release: Highlights and Genetic Geography
+
+- **My Genetic Highlights** is the new landing page. It shows only curated, genotype-specific findings (and a separately labeled unconfirmed CFTR finding when applicable). It does not rank disease risk or treat absence of a variant as a health finding. Other exploratory and unavailable markers remain accessible.
+- **Genetic Geography** retrieves allele frequencies for a selected rsID and DNA letter from the Ensembl variation REST API on demand. Only a public rsID is transmitted; uploaded DNA and genotypes are not sent to Ensembl. It plots reference sample locations (approximate) and frequencies; it does **not** infer ancestry percentages, ethnicity, nationality, or personal geographic origin.
+- Population data require a working internet connection on the app server and are not guaranteed to be available for every variant/allele. Values are not precomputed or invented.

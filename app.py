@@ -5,6 +5,8 @@ from dna.parser import parse_upload
 from dna.engine import load_traits, interpret, CAT_ICONS
 from dna.presentation import plain_result
 from dna.faq import CATEGORIES as FAQ_CATEGORIES, search_faq
+from dna.highlights import build_highlights
+from dna.geography import fetch_frequencies
 
 st.set_page_config(page_title='Helix Explorer | DNA Explorer', page_icon='🧬', layout='wide')
 st.markdown('''<style>.block-container{max-width:1150px;padding-top:2rem} .small-note{color:#777;font-size:.85rem}</style>''', unsafe_allow_html=True)
@@ -27,7 +29,7 @@ with st.sidebar:
         key='dna_file',
     )
     if st.button('Clear my DNA and restart', use_container_width=True):
-        for key in ('calls', 'stats', 'upload_identity', 'dna_file', 'dna_consent'):
+        for key in ('calls', 'stats', 'upload_identity', 'dna_file', 'dna_consent', 'geography_result'):
             st.session_state.pop(key, None)
         st.rerun()
     st.caption('No user database or intentional raw-DNA disk storage. Uploaded bytes and parsed genotypes may remain in Streamlit session/server memory until cleared or the session expires. Hosting-provider retention is outside this app’s control.')
@@ -65,9 +67,76 @@ else:
     st.info('To explore your own results, read the upload notice, check the consent box, and upload your AncestryDNA file. You can also browse the educational library without uploading.')
 
 category_list = list(CAT_ICONS)
-page = st.radio('Explore', ['Overview', 'Trait browser', 'Gene & variant search', 'FAQ', 'About & privacy'], horizontal=True)
+page = st.radio('Explore', ['My Genetic Highlights', 'Genetic Geography', 'Trait browser', 'Gene & variant search', 'FAQ', 'About & privacy'], horizontal=True)
 
-if page == 'Overview':
+if page == 'My Genetic Highlights':
+    st.subheader('⭐ My Genetic Highlights')
+    st.caption('Prioritized, genotype-specific educational findings. These are not ranked by health importance, rarity, or medical risk.')
+    if not calls:
+        st.info('Upload your DNA to see your personalized highlights. The full educational library remains available in Trait browser.')
+    else:
+        highlights, exploratory, unavailable = build_highlights(TRAITS, calls)
+        a,b,c = st.columns(3)
+        a.metric('Interpretable highlights', len(highlights))
+        b.metric('Other / exploratory markers', len(exploratory))
+        c.metric('Missing / uninterpretable', len(unavailable))
+        if not highlights:
+            st.info('No reviewed personalized highlights found in the current small library. This does not imply anything about your health.')
+        for item in highlights:
+            t, r, v = item['trait'], item['result'], item['view']
+            with st.container(border=True):
+                st.markdown(f"**{CAT_ICONS[t['category']]} {v['name']}** · {t['evidence']}")
+                st.markdown(f"### {v['headline']}")
+                st.write(v['meaning'])
+                if t['category'] == 'Health Genetics':
+                    st.warning('Unconfirmed raw-array finding. Use clinical testing and genetic counseling for medical or reproductive decisions.')
+                with st.expander('Why this matters / DNA details'):
+                    st.write(v['intro'])
+                    st.write(v['context'])
+                    st.write(f"**{t['gene']} · {t['rsid']} · Genotype {r['genotype']}**")
+                    st.link_button('Scientific reference', t['source'])
+        with st.expander(f'Other research markers ({len(exploratory)})'):
+            st.write('These genotypes are available, but they are not validated personalized highlights. A marker being present is not itself an important finding.')
+            for item in exploratory:
+                st.write(f"{item['trait']['gene']} · {item['trait']['title']} · {item['result']['status']}")
+        with st.expander(f'Not tested / not interpretable ({len(unavailable)})'):
+            for item in unavailable:
+                st.write(f"{item['trait']['gene']} · {item['trait']['rsid']} · {item['result']['status']}")
+
+elif page == 'Genetic Geography':
+    st.subheader('🌍 Genetic Geography')
+    st.write('Explore **how common an individual DNA letter is in reference samples** from different populations. This is NOT a map of your ancestry, ethnicity, birthplace, or family origin.')
+    st.caption('Population frequencies are requested from the public Ensembl API only after you click Load. The app sends the selected rsID, not your uploaded DNA or genotype.')
+    candidates = [t for t in TRAITS if t.get('rsid', '').startswith('rs')]
+    selected = st.selectbox('Select a variant', candidates, format_func=lambda t: f"{t['title']} · {t['gene']} · {t['rsid']}")
+    genotype = calls.get(selected['rsid'], {}).get('genotype') if calls else None
+    if genotype:
+        st.write(f"Your uploaded genotype: **{genotype}**. This is shown locally and is not sent to Ensembl.")
+    allele = st.selectbox('DNA letter to compare across populations', ['A', 'C', 'G', 'T'], index=0)
+    st.caption('Choose the allele intentionally. A variant may have multiple alleles, and a frequency for one letter is not a trait frequency.')
+    if st.button('Load real reference population frequencies', type='primary'):
+        with st.spinner('Fetching public reference frequencies…'):
+            try:
+                st.session_state['geography_result'] = {'rsid': selected['rsid'], 'allele': allele, 'rows': fetch_frequencies(selected['rsid'], allele)}
+            except RuntimeError as exc:
+                st.session_state.pop('geography_result', None)
+                st.error(str(exc))
+    geo = st.session_state.get('geography_result')
+    if geo and geo['rsid'] == selected['rsid'] and geo['allele'] == allele:
+        rows = geo['rows']
+        if rows:
+            frame = pd.DataFrame(rows)
+            st.caption(f"{len(rows)} reference populations with reported frequency for allele {allele}. Missing populations are omitted, not treated as zero.")
+            st.bar_chart(frame.set_index('Population')['Allele frequency'], horizontal=True)
+            st.map(frame.rename(columns={'Latitude':'lat', 'Longitude':'lon'}), latitude='lat', longitude='lon', size=75)
+            st.caption('Map pins indicate approximate reference sample collection/recruitment locations, not ancestral origins or individual locations. Some samples were recruited outside their population namesake.')
+            st.dataframe(frame[['Population','Region','Allele frequency','Source']], hide_index=True, use_container_width=True, column_config={'Allele frequency': st.column_config.NumberColumn(format='%.3f')})
+        else:
+            st.info('No matching 1000 Genomes reference frequencies were returned for this allele. This is not evidence that it is absent from any population.')
+        st.link_button('View reference variant in Ensembl', f"https://www.ensembl.org/Homo_sapiens/Variation/Explore?v={selected['rsid']}")
+    st.info('**Important:** Reference populations are limited samples, not all residents of a region. Frequency differences do not establish ancestry, race, nationality, or a person’s geographic origin. Some variants have no comparable population data.')
+
+elif page == 'Overview':
     st.subheader('Explore categories')
     cols = st.columns(3)
     for i, cat in enumerate(category_list):
@@ -169,7 +238,7 @@ else:
     st.write('**Public upload beta:** files are transmitted to the Streamlit hosting server over HTTPS when deployed with HTTPS. This app does not intentionally save raw DNA to a database, write uploads to disk, send genotypes to an AI API, or create accounts. Streamlit retains upload bytes and parsed genotypes in server/session memory, potentially until session expiry. Clearing your profile removes app session references but cannot guarantee immediate memory erasure or control provider backups, logs, or telemetry. Do not upload another person’s DNA without authorization.')
     st.write('Only AncestryDNA-style tab-delimited files are supported. Calls with insertion/deletion encodings are skipped. Genome build, allele strand, variant annotation, and source citations must be validated before interpreting new markers.')
     st.write('The knowledge base is intentionally small and illustrative. A marker not tested, or not included in this library, does not indicate a normal result. Confirm any potentially important result with a qualified clinician and accredited laboratory.')
-    st.write('No ancestry inference, risk scores, drug dosing, or comprehensive carrier screening is provided.')
+    st.write('Genetic Geography shows external population allele frequencies, not ancestry inference. No ancestry percentages, risk scores, drug dosing, or comprehensive carrier screening are provided.')
 
 if calls:
     st.divider()
