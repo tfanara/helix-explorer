@@ -17,6 +17,13 @@ def interpret(trait, genotypes):
         return {'status':'Research marker observed', 'genotype':genotype, 'meaning':'Genotype observed. Clinical interpretation withheld; this is not a medical screening result.'}
     if not trait.get('alleles'):
         return {'status':'Research marker observed', 'genotype':genotype, 'meaning':'Genotype observed. This entry is for exploration only; no validated personalized trait prediction is configured.'}
+    if trait['id'] == 'cftr':
+        if genotype == 'CG':
+            return {'status':'Variant allele observed — unconfirmed', 'genotype':genotype, 'meaning':'One C and one G allele observed at the validated GRCh37 position for CFTR N1303K. This is consistent with a heterozygous N1303K variant call, pending clinical confirmation.'}
+        if genotype == 'GG':
+            return {'status':'Two variant alleles observed — unconfirmed', 'genotype':genotype, 'meaning':'Two G alleles observed at the validated GRCh37 position for CFTR N1303K. Seek qualified clinical genetics assessment to verify this result.'}
+        if genotype == 'CC':
+            return {'status':'N1303K not observed at tested site', 'genotype':genotype, 'meaning':'No G allele observed at this site. This does not rule out other CFTR variants or carrier status.'}
     meaning = trait['alleles'].get(genotype)
     if meaning is None:
         return {'status':'Uninterpreted genotype', 'genotype':genotype, 'meaning':'Genotype observed, but no reviewed interpretation is configured for these alleles.'}

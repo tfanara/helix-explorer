@@ -4,6 +4,7 @@ import io
 import zipfile
 
 MAX_BYTES = 35 * 1024 * 1024
+MAX_ROWS = 1_500_000
 REQUIRED = ('rsid', 'chromosome', 'position', 'allele1', 'allele2')
 
 
@@ -15,9 +16,12 @@ def parse_upload(raw: bytes, filename: str):
             members = [i for i in z.infolist() if not i.is_dir() and i.filename.lower().endswith(('.txt', '.tsv'))]
             if len(members) != 1:
                 raise ValueError('ZIP must contain exactly one TXT/TSV DNA file.')
-            if members[0].file_size > MAX_BYTES:
+            if members[0].file_size > MAX_BYTES or members[0].compress_size > MAX_BYTES:
                 raise ValueError('Uncompressed DNA file is too large.')
-            raw = z.read(members[0])
+            with z.open(members[0]) as stream:
+                raw = stream.read(MAX_BYTES + 1)
+            if len(raw) > MAX_BYTES:
+                raise ValueError('Uncompressed DNA file is too large.')
     elif not filename.lower().endswith(('.txt', '.tsv')):
         raise ValueError('Upload a TXT, TSV or ZIP file.')
     try:
@@ -31,6 +35,8 @@ def parse_upload(raw: bytes, filename: str):
     genotypes = {}
     counts = Counter()
     for line_number, line in enumerate(lines, 2):
+        if line_number > MAX_ROWS + 1:
+            raise ValueError('DNA file exceeds maximum supported row count.')
         cols = line.strip().split('\t')
         if len(cols) != 5:
             counts['malformed'] += 1

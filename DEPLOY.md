@@ -1,29 +1,26 @@
-# Helix Explorer deployment checklist
+# Helix Explorer public upload beta
 
-1. Confirm the repository contains **no real DNA files** (including commit history).
-2. Run `python -m pytest -q`.
-3. Commit and push to GitHub (`main`).
-4. Deploy via https://share.streamlit.io/ with entry point `app.py`.
-5. Keep `HELIX_ENABLE_DNA_UPLOADS` unset in the public deployment.
-6. Verify users can browse the library but **cannot upload DNA**.
-7. Verify no secrets or private files were committed.
-8. Obtain privacy/security/clinical-content review before enabling personal DNA uploads.
+Uploads are enabled in this build; no environment variable is needed.
 
-Local development with uploads:
+1. Run `python -m pytest -q` and inspect `git status` / `git diff` before committing.
+2. Confirm no real DNA files or personal reports are in the repository **or Git history**.
+3. Push the changed app and parser to your GitHub repo.
+4. Streamlit Community Cloud should redeploy automatically. Check the app logs and verify the consent-gated uploader appears.
+5. Test with a synthetic DNA file first, then check missing-variant states, clearing the session, and two separate browsers.
+6. Before broadly promoting the service, obtain a security/privacy/legal review, add an appropriate privacy policy and contact, and assess provider retention, consent, and genetic-data regulations.
+
+**Privacy limitations:** This is a public beta, not a verified zero-retention or medically validated platform. Streamlit uploads and parsed genotypes reside in hosting-server memory during sessions; a clear button cannot guarantee secure erasure from infrastructure. The app does not intentionally persist them to a database or send them to AI APIs.
+
+## Updating an existing GitHub repo
+
+Replace the current `app.py`, `dna/parser.py`, `DEPLOY.md`, and tests with the files from this package, then:
 
 ```bash
 conda activate dna-explorer
 cd ~/Documents/helix-explorer-deploy
-HELIX_ENABLE_DNA_UPLOADS=true python -m streamlit run app.py
-```
-
-GitHub CLI example (requires prior `gh auth login`):
-
-```bash
-cd ~/Documents/helix-explorer-deploy
-git init
-git add .
-git commit -m "Initial Helix Explorer public demo"
-git branch -M main
-gh repo create helix-explorer --public --source=. --remote=origin --push
+python -m pip install -r requirements.txt
+python -m pytest -q
+git add app.py dna/parser.py DEPLOY.md tests/test_upload_safety.py
+git commit -m "Enable consent-gated DNA uploads"
+git push origin main
 ```

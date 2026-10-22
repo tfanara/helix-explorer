@@ -57,14 +57,10 @@ To update an existing installation, replace its `data/traits.json`, `dna/engine.
 
 ## Publish this demo with Streamlit Community Cloud
 
-**Public DNA uploads are OFF by default.** This is a safe(r) educational demo, not a production genetics service. Users can browse the trait library without submitting DNA.
+## Public upload beta (updated)
 
-1. Create a GitHub repository (for example `helix-explorer`). Do not commit any actual DNA files.
-2. Push this project's contents, keeping `app.py` and `requirements.txt` in the repository root.
-3. Visit https://share.streamlit.io/ and choose **Create app** / **Deploy an app**, select your GitHub repository, branch `main`, and main file `app.py`.
-4. Publish and test the educational browsing experience. Do not enable uploads on the public instance until an independent security/privacy and clinical-content review.
-5. Local upload testing: run `HELIX_ENABLE_DNA_UPLOADS=true python -m streamlit run app.py` from your Mac Terminal.
+The uploader is enabled with an explicit consent checkbox. There is no longer a `HELIX_ENABLE_DNA_UPLOADS` flag. The app processes DNA on the hosting server in session memory; this is **not** guaranteed zero-retention or medically validated. Do not broadly promote for real genetic data until a privacy/security/legal review. See `DEPLOY.md` for update instructions.
 
-### Privacy guardrail
+## Frequently asked questions
 
-The environment flag `HELIX_ENABLE_DNA_UPLOADS=true` bypasses the demo-only upload block. Do **not** configure this on a public Streamlit Community Cloud instance for real genetic files without reviewing data processing, retention, incident response, access controls, regulatory obligations, and explicit informed consent. Uploaded files and parsed genotypes can remain in Streamlit server memory during sessions. Publicly hosted processing is not local-only or zero-knowledge.
+The **FAQ** tab is available even before a DNA upload. It includes searchable plain-English explanations of alleles, genes, genotypes, SNPs, mutations, carrier status, evidence, raw-data limitations, and privacy. Edit `dna/faq.py` to add or revise entries.

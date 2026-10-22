@@ -23,8 +23,15 @@ def plain_result(trait, result, uploaded):
         headline = 'This marker was not found in your file'
         meaning = 'This is not a negative test. Your DNA provider may not have tested this marker.'
     elif trait['id'] == 'cftr':
-        headline = 'CFTR variant data found — clinical confirmation required'
-        meaning = 'A raw genotype is present at this location. The app cannot establish carrier status until the allele mapping and test quality have been clinically verified. If you have a clinical carrier result, rely on that result.'
+        if status == 'Variant allele observed — unconfirmed':
+            headline = 'N1303K mutation: one copy detected in your raw DNA'
+        elif status == 'Two variant alleles observed — unconfirmed':
+            headline = 'N1303K mutation: two copies suggested by your raw DNA'
+        elif status == 'N1303K not observed at tested site':
+            headline = 'N1303K mutation not detected at this site'
+        else:
+            headline = 'N1303K: genotype found, interpretation unavailable'
+        meaning = result['meaning']
     elif trait['id'] == 'apoe1' or (trait['category'] == 'Health Genetics'):
         headline = 'Genetic marker found — no medical conclusion'
         meaning = 'Your file contains a genotype for this marker, but this app does not turn it into a diagnosis or disease-risk prediction.'
