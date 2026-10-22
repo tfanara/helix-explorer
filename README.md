@@ -78,3 +78,7 @@ The trait browser and gene search now use curated genotype-specific headlines fo
 
 ## Genetic origins and everyday descriptions
 The highlights, trait browser and gene search now include everyday-language interpretations for selected reviewed genotypes. The geographic screen distinguishes the user's many SNPs from a validated ancestry analysis: **it does not claim to calculate geographic origin**. Its individual-marker frequency viewer remains educational. A real multi-marker model requires appropriately licensed population reference genotypes, QC, ancestry-informative SNP selection, allele harmonization, validation, and uncertainty estimates.
+
+## Experimental multi-marker population comparison
+
+The Origins page now includes a **real multi-locus reference-panel comparison engine** (`dna/ancestry.py`). It accepts an external, quality-controlled CSV with `rsid,chromosome,position,allele,population,frequency` columns, aligned to GRCh37 forward-strand calls. It requires at least 30 matching, widely spaced autosomal SNPs and three populations. It compares genotype log-likelihoods and reports reference-panel-relative rankings and marker-bootstrap stability, **not ancestry fractions or exposure history**. It does not provide a built-in reference panel: a vetted reference CSV is required. No reference frequencies are fabricated. Results are research-only and not calibrated as ancestry estimates. The file upload stays on the Streamlit host; no genotype is sent to Ensembl by this module.

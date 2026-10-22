@@ -24,3 +24,5 @@ git add app.py dna/parser.py DEPLOY.md tests/test_upload_safety.py
 git commit -m "Enable consent-gated DNA uploads"
 git push origin main
 ```
+
+The new multi-marker comparison needs a vetted GRCh37 forward-strand population frequency CSV uploaded in the Origins page; it does not automatically infer ancestry without one. See README for the CSV schema and limitations.
