@@ -1,0 +1,697 @@
+[
+  {
+    "id": "eye_color",
+    "title": "Eye color tendency",
+    "category": "Appearance",
+    "gene": "HERC2",
+    "rsid": "rs12913832",
+    "alleles": {
+      "GG": "Associated with lighter eyes, often blue, in European-ancestry populations.",
+      "AG": "Mixed pigmentation signals; eye color cannot be determined from this marker alone.",
+      "AA": "Associated with brown eyes in European-ancestry populations."
+    },
+    "evidence": "Strong association",
+    "caveat": "Eye color depends on multiple genes and ancestry. This is not a certainty.",
+    "source": "https://pubmed.ncbi.nlm.nih.gov/18172690/"
+  },
+  {
+    "id": "skin",
+    "title": "Pigmentation tendency",
+    "category": "Appearance",
+    "gene": "SLC24A5",
+    "rsid": "rs1426654",
+    "alleles": {
+      "AA": "Associated with lighter skin pigmentation in several populations.",
+      "AG": "One copy of a lighter-pigmentation-associated allele.",
+      "GG": "Does not carry the A allele at this marker."
+    },
+    "evidence": "Strong association",
+    "caveat": "Cannot predict skin tone from one SNP; skin pigmentation is polygenic.",
+    "source": "https://pubmed.ncbi.nlm.nih.gov/16357253/"
+  },
+  {
+    "id": "earwax",
+    "title": "Earwax type",
+    "category": "Appearance",
+    "gene": "ABCC11",
+    "rsid": "rs17822931",
+    "alleles": {
+      "CC": "Wet earwax is more likely.",
+      "CT": "Wet earwax is more likely.",
+      "TT": "Dry earwax is more likely."
+    },
+    "evidence": "Strong association",
+    "caveat": "Genetic prediction is not a substitute for observation.",
+    "source": "https://pubmed.ncbi.nlm.nih.gov/16444273/"
+  },
+  {
+    "id": "lactose",
+    "title": "Lactose digestion",
+    "category": "Food & Nutrition",
+    "gene": "MCM6 / LCT",
+    "rsid": "rs4988235",
+    "alleles": {
+      "AA": "More likely to keep digesting lactose as an adult.",
+      "AG": "More likely to keep digesting lactose as an adult.",
+      "GG": "Adult lactose digestion may be reduced, especially in European-ancestry populations."
+    },
+    "evidence": "Strong association",
+    "caveat": "Different populations have other lactase-persistence variants. Symptoms and clinical evaluation matter.",
+    "source": "https://medlineplus.gov/genetics/condition/lactose-intolerance/"
+  },
+  {
+    "id": "caffeine",
+    "title": "Caffeine processing",
+    "category": "Food & Nutrition",
+    "gene": "CYP1A2",
+    "rsid": "rs762551",
+    "alleles": {
+      "AA": "Sometimes associated with faster caffeine metabolism under specific conditions.",
+      "AC": "A single marker cannot reliably predict caffeine clearance.",
+      "CC": "Sometimes associated with slower caffeine metabolism under specific conditions."
+    },
+    "evidence": "Limited predictive value",
+    "caveat": "Medication, smoking, hormones and other genes can change CYP1A2 activity; do not calculate a safe dose from this marker.",
+    "source": "https://www.pharmgkb.org/"
+  },
+  {
+    "id": "bitter",
+    "title": "Bitter taste marker",
+    "category": "Food & Nutrition",
+    "gene": "TAS2R38",
+    "rsid": "rs713598",
+    "alleles": {
+      "CC": "One component of a bitter-taste-associated haplotype.",
+      "CG": "One component of a bitter-taste-associated haplotype.",
+      "GG": "One component of a bitter-taste-associated haplotype."
+    },
+    "evidence": "Requires multiple markers",
+    "caveat": "This SNP alone cannot determine taster status; full TAS2R38 haplotype and actual taste vary.",
+    "source": "https://medlineplus.gov/genetics/gene/tas2r38/"
+  },
+  {
+    "id": "actn3",
+    "title": "Fast-twitch muscle protein",
+    "category": "Fitness",
+    "gene": "ACTN3",
+    "rsid": "rs1815739",
+    "alleles": {
+      "CC": "Predicted to produce functional alpha-actinin-3 protein.",
+      "CT": "Predicted to produce functional alpha-actinin-3 protein.",
+      "TT": "Predicted alpha-actinin-3 deficiency; a common, non-disease muscle protein variation."
+    },
+    "evidence": "Strong molecular effect; weak performance prediction",
+    "caveat": "This does not predict strength, speed, endurance potential or training requirements.",
+    "source": "https://medlineplus.gov/genetics/gene/actn3/"
+  },
+  {
+    "id": "fto",
+    "title": "Body weight association",
+    "category": "Fitness",
+    "gene": "FTO",
+    "rsid": "rs9939609",
+    "alleles": {
+      "AA": "Two copies of an allele associated with slightly higher average BMI in some populations.",
+      "AT": "One copy of an allele associated with slightly higher average BMI in some populations.",
+      "TT": "No A allele at this marker."
+    },
+    "evidence": "Strong population association; low personal predictive value",
+    "caveat": "Not a personal weight forecast or a reason to change diet or training.",
+    "source": "https://pubmed.ncbi.nlm.nih.gov/17434869/"
+  },
+  {
+    "id": "fut2",
+    "title": "Secretor status",
+    "category": "Immune & Infections",
+    "gene": "FUT2",
+    "rsid": "rs601338",
+    "alleles": {
+      "GG": "Likely secretor at this common marker.",
+      "AG": "Likely secretor at this common marker.",
+      "AA": "Likely nonsecretor at this common marker."
+    },
+    "evidence": "Strong in studied populations",
+    "caveat": "Other variants matter in some populations; does not determine whether you will get a stomach virus.",
+    "source": "https://medlineplus.gov/genetics/gene/fut2/"
+  },
+  {
+    "id": "clock",
+    "title": "Sleep timing research",
+    "category": "Sleep & Behavior",
+    "gene": "CLOCK",
+    "rsid": "rs1801260",
+    "alleles": {
+      "AA": "This marker cannot reliably predict whether you are a morning or evening person.",
+      "AG": "This marker cannot reliably predict whether you are a morning or evening person.",
+      "GG": "This marker cannot reliably predict whether you are a morning or evening person."
+    },
+    "evidence": "Weak individual prediction",
+    "caveat": "Chronotype is polygenic and strongly affected by age, light and routine.",
+    "source": "https://medlineplus.gov/genetics/gene/clock/"
+  },
+  {
+    "id": "cftr",
+    "title": "CFTR N1303K variant",
+    "category": "Health Genetics",
+    "gene": "CFTR",
+    "rsid": "rs80034486",
+    "alleles": {
+      "CC": "N1303K alternate allele not observed at this marker.",
+      "CG": "N1303K-associated alternate allele observed; clinical confirmation is essential.",
+      "GG": "Two alternate alleles observed at this marker; seek clinical genetics assessment."
+    },
+    "evidence": "Clinically established variant; raw array unvalidated",
+    "caveat": "Allele mapping must be checked against genome build and current clinical reference before any medical conclusion. This single site is NOT a comprehensive CF carrier screen. Never diagnose from raw data.",
+    "source": "https://www.ncbi.nlm.nih.gov/clinvar/variation/7136/",
+    "expected_chromosome": "7",
+    "expected_position_grch37": 117292931
+  },
+  {
+    "id": "apoe1",
+    "title": "APOE marker 1 (not a risk score)",
+    "category": "Health Genetics",
+    "gene": "APOE",
+    "rsid": "rs429358",
+    "alleles": {},
+    "evidence": "Requires multi-marker interpretation",
+    "caveat": "APOE status requires rs429358 and rs7412 plus careful allele interpretation. This app deliberately does not estimate Alzheimer disease risk.",
+    "source": "https://medlineplus.gov/genetics/gene/apoe/"
+  },
+  {
+    "id": "hfe",
+    "title": "HFE H63D marker",
+    "category": "Health Genetics",
+    "gene": "HFE",
+    "rsid": "rs1799945",
+    "alleles": {},
+    "evidence": "Established variant; clinical context required",
+    "caveat": "The raw allele call alone is not a diagnosis or complete hemochromatosis assessment. Consult clinical testing and iron studies if indicated.",
+    "source": "https://medlineplus.gov/genetics/condition/hereditary-hemochromatosis/"
+  },
+  {
+    "id": "marker_rs1805007",
+    "title": "Hair color research",
+    "category": "Appearance",
+    "gene": "MC1R",
+    "rsid": "rs1805007",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Red-hair-associated MC1R variant; one variant does not determine hair color. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1805007"
+  },
+  {
+    "id": "marker_rs1805008",
+    "title": "Hair pigmentation research",
+    "category": "Appearance",
+    "gene": "MC1R",
+    "rsid": "rs1805008",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Another MC1R pigmentation variant; several genes contribute to hair color. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1805008"
+  },
+  {
+    "id": "marker_rs1805009",
+    "title": "Hair pigmentation research (D294H)",
+    "category": "Appearance",
+    "gene": "MC1R",
+    "rsid": "rs1805009",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "A pigmentation-associated MC1R variant; not a hair-color prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1805009"
+  },
+  {
+    "id": "marker_rs16891982",
+    "title": "Pigmentation marker",
+    "category": "Appearance",
+    "gene": "SLC45A2",
+    "rsid": "rs16891982",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Population-level pigmentation association; appearance cannot be predicted from this SNP alone. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs16891982"
+  },
+  {
+    "id": "marker_rs1800407",
+    "title": "Pigmentation marker (OCA2)",
+    "category": "Appearance",
+    "gene": "OCA2",
+    "rsid": "rs1800407",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Eye-color modifier studied alongside HERC2; not a standalone prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800407"
+  },
+  {
+    "id": "marker_rs1126809",
+    "title": "Pigmentation research (TYR)",
+    "category": "Appearance",
+    "gene": "TYR",
+    "rsid": "rs1126809",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Pigmentation-related gene variant; does not establish a medical condition. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1126809"
+  },
+  {
+    "id": "marker_rs11803731",
+    "title": "Hair shape research",
+    "category": "Appearance",
+    "gene": "TCHH",
+    "rsid": "rs11803731",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Associated with hair curl patterns in some populations; weak for individual prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs11803731"
+  },
+  {
+    "id": "marker_rs3827760",
+    "title": "Hair-shaft research",
+    "category": "Appearance",
+    "gene": "EDAR",
+    "rsid": "rs3827760",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Associated with hair-shaft characteristics and other traits in some populations. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs3827760"
+  },
+  {
+    "id": "marker_rs12203592",
+    "title": "Freckling research",
+    "category": "Appearance",
+    "gene": "IRF4",
+    "rsid": "rs12203592",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in pigmentation and freckling; effects vary across populations. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs12203592"
+  },
+  {
+    "id": "marker_rs4911414",
+    "title": "Pigmentation research (ASIP)",
+    "category": "Appearance",
+    "gene": "ASIP",
+    "rsid": "rs4911414",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in pigmentation; not a direct phenotype test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs4911414"
+  },
+  {
+    "id": "marker_rs12821256",
+    "title": "Hair and pigmentation research",
+    "category": "Appearance",
+    "gene": "KITLG",
+    "rsid": "rs12821256",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Associated with hair color in some populations; not a definitive predictor. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs12821256"
+  },
+  {
+    "id": "marker_rs1726866",
+    "title": "Bitter taste marker 2",
+    "category": "Food & Nutrition",
+    "gene": "TAS2R38",
+    "rsid": "rs1726866",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Part of the multi-SNP TAS2R38 bitter-taste haplotype. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1726866"
+  },
+  {
+    "id": "marker_rs10246939",
+    "title": "Bitter taste marker 3",
+    "category": "Food & Nutrition",
+    "gene": "TAS2R38",
+    "rsid": "rs10246939",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Part of the multi-SNP TAS2R38 bitter-taste haplotype. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs10246939"
+  },
+  {
+    "id": "marker_rs72921001",
+    "title": "Cilantro preference research",
+    "category": "Food & Nutrition",
+    "gene": "OR6A2 region",
+    "rsid": "rs72921001",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "An association signal related to cilantro preference; individual tastes vary. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs72921001"
+  },
+  {
+    "id": "marker_rs4410790",
+    "title": "Caffeine intake research",
+    "category": "Food & Nutrition",
+    "gene": "AHR",
+    "rsid": "rs4410790",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Associated with coffee consumption in some genome-wide studies; not a caffeine dose guide. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs4410790"
+  },
+  {
+    "id": "marker_rs2472297",
+    "title": "Caffeine intake research (CYP1A2)",
+    "category": "Food & Nutrition",
+    "gene": "CYP1A2 region",
+    "rsid": "rs2472297",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Associated with habitual caffeine intake in some populations; not a metabolic test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs2472297"
+  },
+  {
+    "id": "marker_rs671",
+    "title": "Alcohol flushing research",
+    "category": "Food & Nutrition",
+    "gene": "ALDH2",
+    "rsid": "rs671",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Important alcohol metabolism variant; do not infer tolerance or safety from this raw call. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs671"
+  },
+  {
+    "id": "marker_rs1229984",
+    "title": "Alcohol metabolism research",
+    "category": "Food & Nutrition",
+    "gene": "ADH1B",
+    "rsid": "rs1229984",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied for alcohol metabolism and drinking behaviors; no safety advice from one SNP. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1229984"
+  },
+  {
+    "id": "marker_rs1801133",
+    "title": "Folate metabolism research",
+    "category": "Food & Nutrition",
+    "gene": "MTHFR",
+    "rsid": "rs1801133",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Common folate-pathway variant; not a diagnosis or a reason to take supplements. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1801133"
+  },
+  {
+    "id": "marker_rs1801131",
+    "title": "Folate metabolism research (A1298C)",
+    "category": "Food & Nutrition",
+    "gene": "MTHFR",
+    "rsid": "rs1801131",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Another common MTHFR marker; not a clinical recommendation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1801131"
+  },
+  {
+    "id": "marker_rs174547",
+    "title": "Omega-3 metabolism research",
+    "category": "Food & Nutrition",
+    "gene": "FADS1",
+    "rsid": "rs174547",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Associated with fatty-acid measures in population studies; not a diet prescription. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs174547"
+  },
+  {
+    "id": "marker_rs838133",
+    "title": "Sweet taste research",
+    "category": "Food & Nutrition",
+    "gene": "FGF21",
+    "rsid": "rs838133",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Population association with macronutrient and sweet preferences; limited personal prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs838133"
+  },
+  {
+    "id": "marker_rs8192678",
+    "title": "Muscle and metabolism research",
+    "category": "Fitness",
+    "gene": "PPARGC1A",
+    "rsid": "rs8192678",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in energy metabolism and exercise; not a fitness talent test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs8192678"
+  },
+  {
+    "id": "marker_rs4253778",
+    "title": "Exercise response research",
+    "category": "Fitness",
+    "gene": "PPARA",
+    "rsid": "rs4253778",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Exploratory sports-genetics association; no reliable individual performance prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs4253778"
+  },
+  {
+    "id": "marker_rs17782313",
+    "title": "Weight association (MC4R region)",
+    "category": "Fitness",
+    "gene": "MC4R region",
+    "rsid": "rs17782313",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Population association with BMI; effect is generally small. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs17782313"
+  },
+  {
+    "id": "marker_rs4846567",
+    "title": "Waist-to-hip ratio research",
+    "category": "Fitness",
+    "gene": "LYPLAL1 region",
+    "rsid": "rs4846567",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Population-level body fat distribution association; not a body-shape forecast. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs4846567"
+  },
+  {
+    "id": "marker_rs6548238",
+    "title": "Weight association (TMEM18)",
+    "category": "Fitness",
+    "gene": "TMEM18 region",
+    "rsid": "rs6548238",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Population association with BMI; not useful as an individual prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs6548238"
+  },
+  {
+    "id": "marker_rs602662",
+    "title": "Secretor status marker (additional)",
+    "category": "Immune & Infections",
+    "gene": "FUT2",
+    "rsid": "rs602662",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Linked to FUT2 secretor status in some populations; requires haplotype context. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs602662"
+  },
+  {
+    "id": "marker_rs1800795",
+    "title": "Immune response research",
+    "category": "Immune & Infections",
+    "gene": "IL6",
+    "rsid": "rs1800795",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in immune signaling; no individual immune-strength prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800795"
+  },
+  {
+    "id": "marker_rs1800629",
+    "title": "Immune signaling research",
+    "category": "Immune & Infections",
+    "gene": "TNF",
+    "rsid": "rs1800629",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in inflammation; not a disease or immunity test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800629"
+  },
+  {
+    "id": "marker_rs1800896",
+    "title": "Immune response research (IL10)",
+    "category": "Immune & Infections",
+    "gene": "IL10",
+    "rsid": "rs1800896",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in immune regulation; not clinically actionable alone. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800896"
+  },
+  {
+    "id": "marker_rs4986790",
+    "title": "Immune receptor research",
+    "category": "Immune & Infections",
+    "gene": "TLR4",
+    "rsid": "rs4986790",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in innate immune responses; no infection risk estimate. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs4986790"
+  },
+  {
+    "id": "marker_rs228697",
+    "title": "Chronotype research (PER3)",
+    "category": "Sleep & Behavior",
+    "gene": "PER3",
+    "rsid": "rs228697",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in circadian rhythms; cannot predict preferred sleep schedule. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs228697"
+  },
+  {
+    "id": "marker_rs934945",
+    "title": "Sleep timing research (PER2)",
+    "category": "Sleep & Behavior",
+    "gene": "PER2",
+    "rsid": "rs934945",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Studied in circadian biology; weak individual prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs934945"
+  },
+  {
+    "id": "marker_rs1823125",
+    "title": "Sleep duration research",
+    "category": "Sleep & Behavior",
+    "gene": "PAX8 region",
+    "rsid": "rs1823125",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Reported in sleep-duration association studies; individual prediction is limited. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1823125"
+  },
+  {
+    "id": "marker_rs2300478",
+    "title": "Restless legs research",
+    "category": "Sleep & Behavior",
+    "gene": "MEIS1",
+    "rsid": "rs2300478",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Population association with restless legs syndrome; not a diagnosis. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs2300478"
+  },
+  {
+    "id": "marker_rs2278749",
+    "title": "Sleep/circadian research",
+    "category": "Sleep & Behavior",
+    "gene": "ARNTL",
+    "rsid": "rs2278749",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Exploratory circadian research marker; not an individual sleep test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs2278749"
+  },
+  {
+    "id": "marker_rs1800562",
+    "title": "HFE C282Y variant (review required)",
+    "category": "Health Genetics",
+    "gene": "HFE",
+    "rsid": "rs1800562",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Clinically relevant HFE variant; interpretation depends on allele mapping, genotype, ancestry and iron studies. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800562"
+  },
+  {
+    "id": "marker_rs1800730",
+    "title": "HFE S65C variant (review required)",
+    "category": "Health Genetics",
+    "gene": "HFE",
+    "rsid": "rs1800730",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "HFE variant; raw genotype alone does not establish hemochromatosis. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800730"
+  },
+  {
+    "id": "marker_rs7412",
+    "title": "APOE marker 2 (review required)",
+    "category": "Health Genetics",
+    "gene": "APOE",
+    "rsid": "rs7412",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Together with rs429358 contributes to APOE isoforms; this app does not estimate Alzheimer risk. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs7412"
+  },
+  {
+    "id": "marker_rs6025",
+    "title": "Factor V Leiden (review required)",
+    "category": "Health Genetics",
+    "gene": "F5",
+    "rsid": "rs6025",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Clinically relevant thrombophilia variant; raw genotype requires clinical confirmation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs6025"
+  },
+  {
+    "id": "marker_rs1799963",
+    "title": "Prothrombin G20210A (review required)",
+    "category": "Health Genetics",
+    "gene": "F2",
+    "rsid": "rs1799963",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Clinically relevant thrombophilia variant; raw genotype requires clinical confirmation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs1799963"
+  },
+  {
+    "id": "marker_rs28929474",
+    "title": "Alpha-1 antitrypsin Z (review required)",
+    "category": "Health Genetics",
+    "gene": "SERPINA1",
+    "rsid": "rs28929474",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Variant associated with alpha-1 antitrypsin deficiency; no diagnosis from raw genotype. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs28929474"
+  },
+  {
+    "id": "marker_rs17580",
+    "title": "Alpha-1 antitrypsin S (review required)",
+    "category": "Health Genetics",
+    "gene": "SERPINA1",
+    "rsid": "rs17580",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "Variant associated with alpha-1 antitrypsin deficiency; requires clinical interpretation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs17580"
+  },
+  {
+    "id": "marker_rs75527207",
+    "title": "CFTR G551D (review required)",
+    "category": "Health Genetics",
+    "gene": "CFTR",
+    "rsid": "rs75527207",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "CFTR variant annotation needs independent verification; not a comprehensive carrier screen. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs75527207"
+  },
+  {
+    "id": "marker_rs77010898",
+    "title": "CFTR W1282X (review required)",
+    "category": "Health Genetics",
+    "gene": "CFTR",
+    "rsid": "rs77010898",
+    "alleles": {},
+    "evidence": "Exploratory marker — no personalized interpretation",
+    "caveat": "CFTR variant; genotype orientation and allele encoding must be checked. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
+    "source": "https://www.ncbi.nlm.nih.gov/snp/rs77010898"
+  }
+]

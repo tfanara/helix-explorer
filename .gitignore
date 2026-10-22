@@ -1,0 +1,20 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+.DS_Store
+*.zip
+*DNA*.txt
+*DNA*.csv
+raw_data/
+uploads/
+
+# Sensitive genetics: never commit user uploads or secrets
+.streamlit/secrets.toml
+*.vcf
+*.vcf.gz
+*.fastq
+*.bam
+*.cram
+*.23andme
+AncestryDNA.txt
