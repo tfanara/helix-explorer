@@ -10,6 +10,27 @@ EXPLANATIONS = {
     'caffeine': ('How your body handles caffeine', 'CYP1A2 makes an enzyme that helps break down caffeine.', 'This one marker cannot tell you a safe caffeine dose or exactly how quickly you process coffee.'),
 }
 
+# Genotype-specific, reviewed educational headlines. The exact genotype is
+# normalized by the parser and must match a reviewed allele mapping.
+PERSONAL_HEADLINES = {
+    'eye_color': {'GG': 'Lighter eyes are more likely', 'AG': 'This marker gives a mixed eye-color signal', 'AA': 'Brown eyes are more likely'},
+    'skin': {'AA': 'A lighter-pigmentation allele is present twice', 'AG': 'One lighter-pigmentation allele is present', 'GG': 'This lighter-pigmentation allele was not observed'},
+    'earwax': {'CC': 'Wet earwax is more likely', 'CT': 'Wet earwax is more likely', 'TT': 'Dry earwax is more likely'},
+    'lactose': {'AA': 'You are more likely to digest lactose as an adult', 'AG': 'You are more likely to digest lactose as an adult', 'GG': 'Adult lactose digestion may be reduced'},
+    'caffeine': {'AA': 'You may metabolize caffeine faster in some conditions', 'AC': 'Your caffeine-metabolism tendency is uncertain', 'CC': 'You may metabolize caffeine more slowly in some conditions'},
+    'actn3': {'CC': 'You likely produce the ACTN3 muscle protein', 'CT': 'You likely produce the ACTN3 muscle protein', 'TT': 'You likely lack functional ACTN3 muscle protein'},
+    'fto': {'AA': 'Two BMI-associated alleles observed', 'AT': 'One BMI-associated allele observed', 'TT': 'This BMI-associated allele was not observed'},
+    'fut2': {'GG': 'You are likely a secretor', 'AG': 'You are likely a secretor', 'AA': 'You are likely a nonsecretor'},
+}
+
+# A/C is not a validated fast/slow caffeine classification. Avoid implying a
+# known clearance rate or an individual caffeine recommendation.
+CAFFEINE_MEANINGS = {
+    'AA': 'This genotype has been associated with higher CYP1A2 inducibility in some studies. It does not measure your actual caffeine clearance rate.',
+    'AC': 'You carry one A and one C allele. Research on this marker alone cannot reliably classify you as a fast or slow caffeine metabolizer. Some studies report intermediate patterns, but effects vary substantially.',
+    'CC': 'This genotype has been associated with lower CYP1A2 inducibility in some studies. It does not measure your actual caffeine clearance rate.',
+}
+
 def plain_result(trait, result, uploaded):
     name, intro, context = EXPLANATIONS.get(trait['id'], (trait['title'], f"{trait['gene']} is a gene or region studied in connection with this topic.", 'This marker alone may not predict a noticeable personal trait.'))
     status = result['status']
@@ -32,13 +53,14 @@ def plain_result(trait, result, uploaded):
         else:
             headline = 'N1303K: genotype found, interpretation unavailable'
         meaning = result['meaning']
-    elif trait['id'] == 'apoe1' or (trait['category'] == 'Health Genetics'):
+    elif trait['category'] == 'Health Genetics':
         headline = 'Genetic marker found — no medical conclusion'
         meaning = 'Your file contains a genotype for this marker, but this app does not turn it into a diagnosis or disease-risk prediction.'
     elif status == 'Marker observed':
-        headline = 'Your DNA suggests a possible trait'
-        meaning = result['meaning']
+        genotype = result['genotype']
+        headline = PERSONAL_HEADLINES.get(trait['id'], {}).get(genotype, 'Your genotype has a reviewed interpretation')
+        meaning = CAFFEINE_MEANINGS.get(genotype, result['meaning']) if trait['id'] == 'caffeine' else result['meaning']
     else:
-        headline = 'Your DNA contains this research marker'
-        meaning = 'We found this marker in your file, but do not have a sufficiently reviewed personal prediction for it.'
+        headline = 'No reliable personal prediction from this marker'
+        meaning = 'Your file contains this marker, but the scientific evidence is not sufficient for a meaningful individual prediction. The raw genotype remains available in DNA details.'
     return {'name': name, 'intro': intro, 'context': context, 'headline': headline, 'meaning': meaning}

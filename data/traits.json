@@ -66,12 +66,12 @@
     "gene": "CYP1A2",
     "rsid": "rs762551",
     "alleles": {
-      "AA": "Sometimes associated with faster caffeine metabolism under specific conditions.",
-      "AC": "A single marker cannot reliably predict caffeine clearance.",
-      "CC": "Sometimes associated with slower caffeine metabolism under specific conditions."
+      "AA": "Associated with higher CYP1A2 inducibility in some studies; not a direct caffeine clearance measurement.",
+      "AC": "Mixed alleles; this marker alone cannot reliably classify caffeine metabolism speed.",
+      "CC": "Associated with lower CYP1A2 inducibility in some studies; not a direct caffeine clearance measurement."
     },
     "evidence": "Limited predictive value",
-    "caveat": "Medication, smoking, hormones and other genes can change CYP1A2 activity; do not calculate a safe dose from this marker.",
+    "caveat": "rs762551 is influenced by environmental factors and does not provide a validated personal fast/slow caffeine classification. Smoking, medications and hormones can change CYP1A2 activity.",
     "source": "https://www.pharmgkb.org/"
   },
   {
@@ -151,7 +151,7 @@
   },
   {
     "id": "cftr",
-    "title": "Cystic fibrosis \u2014 N1303K mutation",
+    "title": "Cystic fibrosis — N1303K mutation",
     "category": "Health Genetics",
     "gene": "CFTR",
     "rsid": "rs80034486",
@@ -202,7 +202,7 @@
     "gene": "MC1R",
     "rsid": "rs1805007",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Red-hair-associated MC1R variant; one variant does not determine hair color. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1805007"
   },
@@ -213,7 +213,7 @@
     "gene": "MC1R",
     "rsid": "rs1805008",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Another MC1R pigmentation variant; several genes contribute to hair color. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1805008"
   },
@@ -224,7 +224,7 @@
     "gene": "MC1R",
     "rsid": "rs1805009",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "A pigmentation-associated MC1R variant; not a hair-color prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1805009"
   },
@@ -235,7 +235,7 @@
     "gene": "SLC45A2",
     "rsid": "rs16891982",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Population-level pigmentation association; appearance cannot be predicted from this SNP alone. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs16891982"
   },
@@ -246,7 +246,7 @@
     "gene": "OCA2",
     "rsid": "rs1800407",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Eye-color modifier studied alongside HERC2; not a standalone prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800407"
   },
@@ -257,7 +257,7 @@
     "gene": "TYR",
     "rsid": "rs1126809",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Pigmentation-related gene variant; does not establish a medical condition. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1126809"
   },
@@ -268,7 +268,7 @@
     "gene": "TCHH",
     "rsid": "rs11803731",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Associated with hair curl patterns in some populations; weak for individual prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs11803731"
   },
@@ -279,7 +279,7 @@
     "gene": "EDAR",
     "rsid": "rs3827760",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Associated with hair-shaft characteristics and other traits in some populations. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs3827760"
   },
@@ -290,7 +290,7 @@
     "gene": "IRF4",
     "rsid": "rs12203592",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in pigmentation and freckling; effects vary across populations. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs12203592"
   },
@@ -301,7 +301,7 @@
     "gene": "ASIP",
     "rsid": "rs4911414",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in pigmentation; not a direct phenotype test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs4911414"
   },
@@ -312,7 +312,7 @@
     "gene": "KITLG",
     "rsid": "rs12821256",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Associated with hair color in some populations; not a definitive predictor. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs12821256"
   },
@@ -323,7 +323,7 @@
     "gene": "TAS2R38",
     "rsid": "rs1726866",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Part of the multi-SNP TAS2R38 bitter-taste haplotype. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1726866"
   },
@@ -334,7 +334,7 @@
     "gene": "TAS2R38",
     "rsid": "rs10246939",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Part of the multi-SNP TAS2R38 bitter-taste haplotype. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs10246939"
   },
@@ -345,7 +345,7 @@
     "gene": "OR6A2 region",
     "rsid": "rs72921001",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "An association signal related to cilantro preference; individual tastes vary. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs72921001"
   },
@@ -356,7 +356,7 @@
     "gene": "AHR",
     "rsid": "rs4410790",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Associated with coffee consumption in some genome-wide studies; not a caffeine dose guide. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs4410790"
   },
@@ -367,7 +367,7 @@
     "gene": "CYP1A2 region",
     "rsid": "rs2472297",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Associated with habitual caffeine intake in some populations; not a metabolic test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs2472297"
   },
@@ -378,7 +378,7 @@
     "gene": "ALDH2",
     "rsid": "rs671",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Important alcohol metabolism variant; do not infer tolerance or safety from this raw call. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs671"
   },
@@ -389,7 +389,7 @@
     "gene": "ADH1B",
     "rsid": "rs1229984",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied for alcohol metabolism and drinking behaviors; no safety advice from one SNP. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1229984"
   },
@@ -400,7 +400,7 @@
     "gene": "MTHFR",
     "rsid": "rs1801133",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Common folate-pathway variant; not a diagnosis or a reason to take supplements. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1801133"
   },
@@ -411,7 +411,7 @@
     "gene": "MTHFR",
     "rsid": "rs1801131",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Another common MTHFR marker; not a clinical recommendation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1801131"
   },
@@ -422,7 +422,7 @@
     "gene": "FADS1",
     "rsid": "rs174547",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Associated with fatty-acid measures in population studies; not a diet prescription. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs174547"
   },
@@ -433,7 +433,7 @@
     "gene": "FGF21",
     "rsid": "rs838133",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Population association with macronutrient and sweet preferences; limited personal prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs838133"
   },
@@ -444,7 +444,7 @@
     "gene": "PPARGC1A",
     "rsid": "rs8192678",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in energy metabolism and exercise; not a fitness talent test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs8192678"
   },
@@ -455,7 +455,7 @@
     "gene": "PPARA",
     "rsid": "rs4253778",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Exploratory sports-genetics association; no reliable individual performance prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs4253778"
   },
@@ -466,7 +466,7 @@
     "gene": "MC4R region",
     "rsid": "rs17782313",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Population association with BMI; effect is generally small. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs17782313"
   },
@@ -477,7 +477,7 @@
     "gene": "LYPLAL1 region",
     "rsid": "rs4846567",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Population-level body fat distribution association; not a body-shape forecast. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs4846567"
   },
@@ -488,7 +488,7 @@
     "gene": "TMEM18 region",
     "rsid": "rs6548238",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Population association with BMI; not useful as an individual prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs6548238"
   },
@@ -499,7 +499,7 @@
     "gene": "FUT2",
     "rsid": "rs602662",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Linked to FUT2 secretor status in some populations; requires haplotype context. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs602662"
   },
@@ -510,7 +510,7 @@
     "gene": "IL6",
     "rsid": "rs1800795",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in immune signaling; no individual immune-strength prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800795"
   },
@@ -521,7 +521,7 @@
     "gene": "TNF",
     "rsid": "rs1800629",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in inflammation; not a disease or immunity test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800629"
   },
@@ -532,7 +532,7 @@
     "gene": "IL10",
     "rsid": "rs1800896",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in immune regulation; not clinically actionable alone. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800896"
   },
@@ -543,7 +543,7 @@
     "gene": "TLR4",
     "rsid": "rs4986790",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in innate immune responses; no infection risk estimate. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs4986790"
   },
@@ -554,7 +554,7 @@
     "gene": "PER3",
     "rsid": "rs228697",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in circadian rhythms; cannot predict preferred sleep schedule. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs228697"
   },
@@ -565,7 +565,7 @@
     "gene": "PER2",
     "rsid": "rs934945",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Studied in circadian biology; weak individual prediction. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs934945"
   },
@@ -576,7 +576,7 @@
     "gene": "PAX8 region",
     "rsid": "rs1823125",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Reported in sleep-duration association studies; individual prediction is limited. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1823125"
   },
@@ -587,7 +587,7 @@
     "gene": "MEIS1",
     "rsid": "rs2300478",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Population association with restless legs syndrome; not a diagnosis. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs2300478"
   },
@@ -598,7 +598,7 @@
     "gene": "ARNTL",
     "rsid": "rs2278749",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Exploratory circadian research marker; not an individual sleep test. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs2278749"
   },
@@ -609,7 +609,7 @@
     "gene": "HFE",
     "rsid": "rs1800562",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Clinically relevant HFE variant; interpretation depends on allele mapping, genotype, ancestry and iron studies. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800562"
   },
@@ -620,7 +620,7 @@
     "gene": "HFE",
     "rsid": "rs1800730",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "HFE variant; raw genotype alone does not establish hemochromatosis. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1800730"
   },
@@ -631,7 +631,7 @@
     "gene": "APOE",
     "rsid": "rs7412",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Together with rs429358 contributes to APOE isoforms; this app does not estimate Alzheimer risk. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs7412"
   },
@@ -642,7 +642,7 @@
     "gene": "F5",
     "rsid": "rs6025",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Clinically relevant thrombophilia variant; raw genotype requires clinical confirmation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs6025"
   },
@@ -653,7 +653,7 @@
     "gene": "F2",
     "rsid": "rs1799963",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Clinically relevant thrombophilia variant; raw genotype requires clinical confirmation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs1799963"
   },
@@ -664,7 +664,7 @@
     "gene": "SERPINA1",
     "rsid": "rs28929474",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Variant associated with alpha-1 antitrypsin deficiency; no diagnosis from raw genotype. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs28929474"
   },
@@ -675,7 +675,7 @@
     "gene": "SERPINA1",
     "rsid": "rs17580",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "Variant associated with alpha-1 antitrypsin deficiency; requires clinical interpretation. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs17580"
   },
@@ -686,7 +686,7 @@
     "gene": "CFTR",
     "rsid": "rs75527207",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "CFTR variant annotation needs independent verification; not a comprehensive carrier screen. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs75527207"
   },
@@ -697,7 +697,7 @@
     "gene": "CFTR",
     "rsid": "rs77010898",
     "alleles": {},
-    "evidence": "Exploratory marker \u2014 no personalized interpretation",
+    "evidence": "Exploratory marker — no personalized interpretation",
     "caveat": "CFTR variant; genotype orientation and allele encoding must be checked. This entry only shows whether a genotype is present in your uploaded file. No phenotype or clinical status is inferred.",
     "source": "https://www.ncbi.nlm.nih.gov/snp/rs77010898"
   }

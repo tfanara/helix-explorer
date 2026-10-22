@@ -91,6 +91,8 @@ elif page == 'Trait browser':
         with st.expander(f"{CAT_ICONS[t['category']]} {view['name']}"):
             st.markdown(f"### {view['headline']}")
             st.write(view['meaning'])
+            if calls:
+                st.caption(f"Your genotype: {result['genotype']} · Evidence: {t['evidence']}")
             st.markdown('**What does this gene do?**')
             st.write(view['intro'])
             st.markdown('**Why does it matter?**')
@@ -117,6 +119,8 @@ elif page == 'Gene & variant search':
                 st.subheader(view['name'])
                 st.markdown(f"**{view['headline']}**")
                 st.write(view['meaning'])
+                if calls:
+                    st.caption(f"Your genotype: {r['genotype']} · Evidence: {t['evidence']}")
                 if t.get('variant_name'):
                     st.info(f"**Identified mutation: {t['variant_name']}** ({t.get('variant_protein', '')}). This means one amino acid in the CFTR protein changes from asparagine (N) to lysine (K) at position 1303. The variant is classified as disease-causing, but your consumer DNA call needs clinical confirmation.")
                 st.write(view['intro'])
@@ -172,6 +176,6 @@ if calls:
     rows=[]
     for t in TRAITS:
         r=interpret(t,calls)
-        rows.append({'Category':t['category'],'Trait':t['title'],'Gene':t['gene'],'rsID':t['rsid'],'Genotype':r['genotype'],'Status':r['status'],'Interpretation':r['meaning'],'Evidence':t['evidence'],'Caveat':t['caveat'],'Source':t['source']})
+        rows.append({'Category':t['category'],'Trait':t['title'],'Gene':t['gene'],'rsID':t['rsid'],'Genotype':r['genotype'],'Status':r['status'],'Interpretation':plain_result(t,r,True)['meaning'],'Headline':plain_result(t,r,True)['headline'],'Evidence':t['evidence'],'Caveat':t['caveat'],'Source':t['source']})
     st.download_button('Download curated results (CSV)',pd.DataFrame(rows).to_csv(index=False).encode('utf-8'),'dna_explorer_results.csv','text/csv')
     st.caption('Downloaded report contains sensitive personal genotype information. Store securely.')

@@ -64,3 +64,7 @@ The uploader is enabled with an explicit consent checkbox. There is no longer a 
 ## Frequently asked questions
 
 The **FAQ** tab is available even before a DNA upload. It includes searchable plain-English explanations of alleles, genes, genotypes, SNPs, mutations, carrier status, evidence, raw-data limitations, and privacy. Edit `dna/faq.py` to add or revise entries.
+
+## Genotype-aware interpretations
+
+The trait browser and gene search now use curated genotype-specific headlines for HERC2, SLC24A5, ABCC11, LCT/MCM6, CYP1A2, ACTN3, FTO and FUT2. CFTR N1303K retains its separate clinically cautious handling. Other research markers explicitly state that no reliable individual prediction is available. Caffeine A/C is **not** labeled as definitively fast or slow. These are educational associations, not validated health predictions.
