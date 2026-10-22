@@ -86,3 +86,7 @@ The Origins page now includes a **real multi-locus reference-panel comparison en
 
 ## Single-upload genetic origins (experimental)
 Upload AncestryDNA once. In Genetic Origins, click **Compare my DNA with reference populations**. The app automatically requests 1000 Genomes Phase 3 population frequencies from Ensembl GRCh37 using public rsIDs only. It does not upload personal genotypes or require a reference CSV. Internet access to Ensembl is required at analysis time; the public service may be slow, unavailable, or provide insufficient comparable SNPs, in which case the app shows no fabricated result. This is an exploratory, nonvalidated single-population fit, not ancestry fractions or geographic exposure.
+
+
+## Geographic map refresh
+The geography page now focuses entirely on the combined-marker comparison. The single-variant explorer was removed from this page. Map circles are approximate reference population anchors; bar chart percentages are **bootstrap top-rank consistency**, not ancestry mixture estimates. A valid ancestry percentage model has not been implemented.

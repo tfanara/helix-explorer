@@ -6,7 +6,7 @@ from dna.engine import load_traits, interpret, CAT_ICONS
 from dna.presentation import plain_result
 from dna.faq import CATEGORIES as FAQ_CATEGORIES, search_faq
 from dna.highlights import build_highlights
-from dna.geography import fetch_frequencies
+from dna.origins_view import make_map_rows, make_support_rows
 from dna.auto_origins import run_auto_comparison
 
 st.set_page_config(page_title='Helix Explorer | DNA Explorer', page_icon='🧬', layout='wide')
@@ -108,16 +108,14 @@ if page == 'My Genetic Highlights':
                 st.write(f"{item['trait']['gene']} · {item['trait']['rsid']} · {item['result']['status']}")
 
 elif page == 'Genetic Origins & Population History':
-    st.subheader('🌍 Genetic Origins & Population History')
-    st.markdown('### Compare your whole DNA profile with reference populations')
-    st.write('This research feature combines **at least 30 independent genetic markers** against population allele frequencies. It reports **relative statistical similarity**, not ancestry percentages, ethnicity, geographic exposure, or family origin.')
-    st.warning('**Experimental method, not a validated ancestry test.** Results depend strongly on the reference panel and populations included. Mixed ancestry, unequal sampling, genetic linkage and other effects can distort the rankings. Do not interpret the leading population as your origin.')
-    st.write('**Only your AncestryDNA file is needed.** Click the button below to automatically retrieve published population frequencies for multiple markers. The app sends selected public **rsIDs**, not your DNA letters or uploaded file, to Ensembl. The reference service must be online.')
-    st.info('**What this can tell you:** which reference samples best fit the selected markers in this limited experiment. **What it cannot tell you:** ancestry percentages, your ethnicity, exact ancestral locations, or where you have lived. This is not a validated ancestry test, and the markers are not a curated ancestry-informative panel.')
+    st.subheader('🌍 Your Genetic Origins')
+    st.markdown('### Where does your DNA resemble reference populations?')
+    st.write('Explore how **many markers together** compare with people in published reference datasets. This is an early research comparison—not a family-tree map or an ancestry-percentage test.')
+    st.info('**How to read this page:** A stronger match means the DNA markers analyzed fit that reference sample better than the other samples tested. It does not prove that your ancestors lived there.')
     if not calls:
-        st.info('Upload your AncestryDNA file in the sidebar to enable the automatic comparison.')
-    elif st.button('Compare my DNA with reference populations', type='primary'):
-        with st.spinner('Requesting public reference frequencies and comparing markers. This may take a minute…'):
+        st.info('Upload your AncestryDNA file in the sidebar. No additional uploads are needed.')
+    elif st.button('🌐 Explore my population matches', type='primary', use_container_width=True):
+        with st.spinner('Collecting public reference data and comparing DNA markers…'):
             try:
                 result = run_auto_comparison(calls)
                 st.session_state['ancestry_result'] = result
@@ -127,55 +125,41 @@ elif page == 'Genetic Origins & Population History':
                 st.error(str(exc))
             except Exception:
                 st.session_state.pop('ancestry_result', None)
-                st.error('Could not complete the public reference lookup. Please retry later; no additional file upload is needed.')
-    result = st.session_state.get('ancestry_result') if st.session_state.get('ancestry_reference_identity') == st.session_state.get('upload_identity') and calls else None
+                st.error('The public reference lookup could not finish. Try again later; no extra file is needed.')
+    result = st.session_state.get('ancestry_result') if calls and st.session_state.get('ancestry_reference_identity') == st.session_state.get('upload_identity') else None
     if result:
-        st.success(f"Compared {result['markers']} widely spaced SNPs across {result['population_count']} reference samples.")
-        st.markdown('### Closest statistical matches in this reference panel')
-        best = result['rows'][0]
-        st.write(f"**Closest match in this experiment:** {best['Population']}. This does **not** mean your ancestry comes from that population. It means this reference sample best fits the selected markers among those compared.")
-        st.dataframe(pd.DataFrame(result['rows']), hide_index=True, use_container_width=True)
-        st.bar_chart(pd.DataFrame(result['rows']).set_index('Population')['Relative log-likelihood'], horizontal=True)
-        st.markdown('**Understanding the numbers**')
-        st.write('**Relative log-likelihood:** 0 marks the best-fitting population in this comparison; more negative values fit worse. These are not percentages. **Bootstrap top-rank frequency:** how often a population came first when markers were randomly resampled; it is not your probability of having ancestry from that group.')
-        st.caption(f"Requested {result['requested_markers']} public marker identifiers; {result['reference_markers']} had comparable reference data. Unavailable API batches: {result['failed_batches']}.")
-        st.warning('The method assumes one reference population and cannot model mixed ancestry. Reference samples are limited, and randomly selected genome-wide SNPs are not a validated ancestry panel. Do not use these rankings to infer ethnicity, nationality, or personal geographic exposure.')
-    st.caption('Reference: Ensembl GRCh37 REST API, 1000 Genomes Phase 3 allele frequencies. The analysis only runs on request. A service outage or insufficient matched data yields no result rather than invented estimates.')
-    st.divider()
-    with st.expander('Research explorer: frequencies for one marker (not your ancestry)'):
-        st.caption('The tool below is for learning about one marker. It is not used to calculate geographic origins.')
-    st.divider()
-    st.markdown('### Individual-marker population frequencies (educational)')
-    st.write('Explore **how common an individual DNA letter is in reference samples** from different populations. This is NOT a map of your ancestry, ethnicity, birthplace, or family origin.')
-    st.caption('Population frequencies are requested from the public Ensembl API only after you click Load. The app sends the selected rsID, not your uploaded DNA or genotype.')
-    candidates = [t for t in TRAITS if t.get('rsid', '').startswith('rs')]
-    selected = st.selectbox('Select a variant', candidates, format_func=lambda t: f"{t['title']} · {t['gene']} · {t['rsid']}")
-    genotype = calls.get(selected['rsid'], {}).get('genotype') if calls else None
-    if genotype:
-        st.write(f"Your uploaded genotype: **{genotype}**. This is shown locally and is not sent to Ensembl.")
-    allele = st.selectbox('DNA letter to compare across populations', ['A', 'C', 'G', 'T'], index=0)
-    st.caption('Choose the allele intentionally. A variant may have multiple alleles, and a frequency for one letter is not a trait frequency.')
-    if st.button('Load real reference population frequencies', type='primary'):
-        with st.spinner('Fetching public reference frequencies…'):
-            try:
-                st.session_state['geography_result'] = {'rsid': selected['rsid'], 'allele': allele, 'rows': fetch_frequencies(selected['rsid'], allele)}
-            except RuntimeError as exc:
-                st.session_state.pop('geography_result', None)
-                st.error(str(exc))
-    geo = st.session_state.get('geography_result')
-    if geo and geo['rsid'] == selected['rsid'] and geo['allele'] == allele:
-        rows = geo['rows']
-        if rows:
-            frame = pd.DataFrame(rows)
-            st.caption(f"{len(rows)} reference populations with reported frequency for allele {allele}. Missing populations are omitted, not treated as zero.")
-            st.bar_chart(frame.set_index('Population')['Allele frequency'], horizontal=True)
-            st.map(frame.rename(columns={'Latitude':'lat', 'Longitude':'lon'}), latitude='lat', longitude='lon', size=75)
-            st.caption('Map pins indicate approximate reference sample collection/recruitment locations, not ancestral origins or individual locations. Some samples were recruited outside their population namesake.')
-            st.dataframe(frame[['Population','Region','Allele frequency','Source']], hide_index=True, use_container_width=True, column_config={'Allele frequency': st.column_config.NumberColumn(format='%.3f')})
+        support = make_support_rows(result['rows'])
+        map_rows = make_map_rows(result['rows'])
+        st.divider()
+        first, second, third = st.columns(3)
+        first.metric('DNA markers compared', f"{result['markers']:,}")
+        second.metric('Reference populations', result['population_count'])
+        third.metric('Highest-ranking sample', result['rows'][0]['Population'])
+        st.markdown('### 🗺️ Population comparison map')
+        st.write('Each circle shows the **approximate geographic association of a reference population**, not your ancestral hometown. Larger circles mean that population ranked first more often when the same DNA markers were resampled.')
+        if map_rows:
+            frame = pd.DataFrame(map_rows)
+            st.map(frame, latitude='lat', longitude='lon', size='marker_size', zoom=1, use_container_width=True)
+            st.caption('Some reference participants were recruited outside their ancestral region. Map positions are illustrative regional anchors, not precise ancestral coordinates.')
         else:
-            st.info('No matching 1000 Genomes reference frequencies were returned for this allele. This is not evidence that it is absent from any population.')
-        st.link_button('View reference variant in Ensembl', f"https://www.ensembl.org/Homo_sapiens/Variation/Explore?v={selected['rsid']}")
-    st.info('**Important:** Reference populations are limited samples, not all residents of a region. Frequency differences do not establish ancestry, race, nationality, or a person’s geographic origin. Some variants have no comparable population data.')
+            st.info('Geographic coordinates were not available for the returned reference populations.')
+        st.markdown('### 📊 Which reference samples ranked most consistently?')
+        st.write('The percentages below are **repeat-ranking percentages**, NOT percentages of your ancestry. For example, 70% means a population came first in 70% of repeated marker samples—not that 70% of your ancestors came from there.')
+        chart = pd.DataFrame(support)
+        st.bar_chart(chart.set_index('Population')['Top-rank consistency (%)'], horizontal=True)
+        st.dataframe(chart, hide_index=True, use_container_width=True,
+                     column_config={'Top-rank consistency (%)': st.column_config.NumberColumn(format='%.1f%%')})
+        st.markdown('### What does this suggest about me?')
+        st.write(f"Among the populations compared, **{result['rows'][0]['Population']}** was the best-fitting single reference sample for these markers. That is a statistical match—not proof of ancestry from that location.")
+        st.warning('**Why we are not showing an ancestry makeup pie chart:** The current model assumes one population at a time. It cannot separate mixed ancestry or estimate regional ancestry proportions. Converting its scores into a pie chart would invent percentages. A validated multi-population admixture model and a larger matched reference panel are required for that feature.')
+        with st.expander('How reliable is this? Technical details and limitations'):
+            st.write('The comparison uses widely spaced markers, published 1000 Genomes frequencies, and a simple genotype-likelihood model. Markers were sampled across the genome but were **not selected as a validated ancestry-informative panel**. Reference groups are incomplete and unevenly sampled; results can change with the panel and marker selection.')
+            st.write('**Top-rank consistency:** the fraction of bootstrap resamples in which each population had the best score. It is not the probability of having ancestors from that population.')
+            st.dataframe(pd.DataFrame(result['rows']), hide_index=True, use_container_width=True)
+            st.caption(f"Requested {result['requested_markers']} rsIDs; {result['reference_markers']} had comparable data; {result['failed_batches']} API batches failed.")
+        st.caption('Source: Ensembl GRCh37 / 1000 Genomes Phase 3 population frequencies. Only public rsIDs are sent to Ensembl; your uploaded genotypes are not sent. Results depend on the external service.')
+    else:
+        st.caption('The map appears after the reference comparison finishes. The app does not generate ancestry percentages without an appropriate validated model.')
 
 elif page == 'Overview':
     st.subheader('Explore categories')
