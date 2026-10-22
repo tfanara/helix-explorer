@@ -5,6 +5,7 @@ from dna.parser import parse_upload
 from dna.engine import load_traits, interpret, CAT_ICONS
 from dna.presentation import plain_result
 from dna.result_context import genotype_comparison, numeric_context
+from dna.deep_explanations import detailed_explanation
 from dna.trait_geography import genotype_alleles, frequency_summary, frequency_explanation
 from dna.geography import fetch_frequencies
 from dna.faq import CATEGORIES as FAQ_CATEGORIES, search_faq
@@ -91,6 +92,32 @@ def show_personal_context(trait, result):
     st.write(numeric_context(trait))
     st.caption('Genotypes are shown in the allele orientation used by this app. These are associations, not guarantees.')
 
+def show_deep_explanation(trait, result):
+    """Consistent educational explanations for every trait in every result view."""
+    info = detailed_explanation(trait, result)
+    st.markdown('**🧠 What this means for you**')
+    st.write(info['takeaway'])
+    st.markdown('**What is this gene actually doing?**')
+    st.write(info['biology'])
+    st.markdown('**Why does it matter in everyday life?**')
+    st.write(info['importance'])
+    st.markdown('**Practical takeaway**')
+    st.write(info['action'])
+    with st.expander('🧬 Compare other genotypes and understand the numbers'):
+        if info['alternatives']:
+            st.dataframe(pd.DataFrame(info['alternatives']), hide_index=True, use_container_width=True)
+        else:
+            st.write('This research marker has no reviewed genotype-by-genotype comparison. ' 
+                     'Different DNA letters are not automatically different health outcomes.')
+        st.markdown('**Can we put a percentage on it?**')
+        st.write(numeric_context(trait))
+        st.caption('Reference-population frequencies, when available in the geographic section, '
+                   'measure how common an allele is—not your chance of experiencing a trait.')
+    if trait['category'] == 'Health Genetics':
+        st.warning('Raw consumer DNA cannot confirm or exclude a medical condition. '
+                   'Confirm potentially important findings with an accredited clinical laboratory.')
+
+
 @st.cache_data(ttl=86400, show_spinner=False)
 def cached_trait_frequencies(rsid, allele):
     # Public variant identifier only; never send uploaded genotype or file.
@@ -160,6 +187,7 @@ if page == 'My Genetic Highlights':
                 st.markdown('**What this means in everyday life**')
                 st.write(v['everyday'][0])
                 st.caption(v['everyday'][1])
+                show_deep_explanation(t, r)
                 show_personal_context(t, r)
                 show_trait_geography(t, r)
                 if t['category'] == 'Health Genetics':
@@ -258,6 +286,7 @@ elif page == 'Trait browser':
             st.markdown('**In plain English**')
             st.write(view['everyday'][0])
             st.caption(view['everyday'][1])
+            show_deep_explanation(t, result)
             show_personal_context(t, result)
             show_trait_geography(t, result)
             if calls:
@@ -291,6 +320,7 @@ elif page == 'Gene & variant search':
                 st.markdown('**In plain English**')
                 st.write(view['everyday'][0])
                 st.caption(view['everyday'][1])
+                show_deep_explanation(t, r)
                 show_personal_context(t, r)
                 show_trait_geography(t, r)
                 if calls:

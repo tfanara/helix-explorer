@@ -96,3 +96,7 @@ Each interpreted result now has an optional **Where is this genetic variation fo
 
 ### Population lookup reliability update
 The individual-trait geography viewer now uses Ensembl's documented `pops=1` endpoint with explicit JSON headers, retries transient errors, tries a second Ensembl host, distinguishes missing population data from connection failures, and displays diagnostic HTTP status codes without exposing uploaded DNA. It still needs network access from Streamlit Community Cloud. No population frequencies are fabricated.
+
+## Full trait explanations (latest update)
+
+All 59 curated markers now have dedicated plain-English explanations of what the gene or variant does, why it matters, and a practical takeaway. The same expanded explanation appears in My Genetic Highlights, Trait Browser, and Gene & Variant Search. Where the trait has reviewed genotype-specific alternatives, an expandable comparison table highlights the user's genotype. Research-only markers explicitly do not receive fabricated personalized predictions or probabilities. Geographic allele-frequency lookups remain optional and require network access.
