@@ -10,6 +10,58 @@ EXPLANATIONS = {
     'caffeine': ('How your body handles caffeine', 'CYP1A2 makes an enzyme that helps break down caffeine.', 'This one marker cannot tell you a safe caffeine dose or exactly how quickly you process coffee.'),
 }
 
+# Everyday-life explanations for markers with genotype-specific interpretations.
+# The molecular finding is not automatically a prediction of a person's experience.
+EVERYDAY_EXPLANATIONS = {
+    'actn3': {
+        'TT': ('Your muscles can still work normally. This common DNA pattern means your body probably does not make a particular protein found in fast-twitch muscle fibers. Other proteins help compensate.', 'It does NOT mean you are weak, cannot sprint, or are destined for endurance sports. Training and many other factors matter much more.'),
+        'CC': ('Your DNA suggests you can make alpha-actinin-3, a protein used in some fast-twitch muscle fibers.', 'This does NOT mean you are naturally fast, strong, or a better athlete.'),
+        'CT': ('Your DNA suggests you can make alpha-actinin-3, a protein used in some fast-twitch muscle fibers.', 'This does NOT mean you are naturally fast, strong, or a better athlete.'),
+    },
+    'eye_color': {
+        'GG': ('This DNA pattern is associated with lighter eyes, especially blue, in some studied populations.', 'Eye color involves several genes; it is not a guarantee.'),
+        'AG': ('You have one of each of two common DNA letters at an eye-pigment marker, so this single marker gives a mixed signal.', 'Your actual eye color depends on several other genes.'),
+        'AA': ('This DNA pattern is associated with brown eyes in some studied populations.', 'Eye color involves several genes; it is not a guarantee.'),
+    },
+    'lactose': {
+        'AA': ('Your DNA suggests your body is more likely to keep making lactase, the enzyme that digests milk sugar, after childhood.', 'This does not guarantee dairy will agree with you. Other causes of digestive symptoms exist.'),
+        'AG': ('Your DNA suggests your body is more likely to keep making lactase, the enzyme that digests milk sugar, after childhood.', 'This does not guarantee dairy will agree with you. Other causes of digestive symptoms exist.'),
+        'GG': ('This marker is associated with a greater chance of making less lactase as an adult in some populations.', 'Other variants can allow lactose digestion, and this result cannot diagnose lactose intolerance.'),
+    },
+    'earwax': {
+        'TT': ('Your DNA suggests dry, flaky earwax is more likely.', 'This is a normal inherited difference, not a disease.'),
+        'CT': ('Your DNA suggests wet or sticky earwax is more likely.', 'This is a normal inherited difference, not a disease.'),
+        'CC': ('Your DNA suggests wet or sticky earwax is more likely.', 'This is a normal inherited difference, not a disease.'),
+    },
+    'caffeine': {
+        'AA': ('Some research links this DNA pattern to higher activity of a caffeine-processing enzyme in certain circumstances.', 'It cannot tell you how long caffeine stays in your body or how much coffee is safe for you.'),
+        'AC': ('You carry two different DNA letters at a caffeine-related marker. This alone cannot tell whether you process caffeine quickly or slowly.', 'Sleep, smoking, medicines, hormones, and other genes may matter more.'),
+        'CC': ('Some research links this DNA pattern to lower activity of a caffeine-processing enzyme in certain circumstances.', 'It cannot tell you how long caffeine stays in your body or how much coffee is safe for you.'),
+    },
+    'fut2': {
+        'AA': ('This genotype is associated with being a nonsecretor, meaning some blood-group-related sugars may be absent from certain body fluids.', 'It does not diagnose illness or reliably predict whether you will get infections.'),
+        'AG': ('This genotype is associated with being a secretor, meaning certain blood-group-related sugars can appear in body fluids.', 'It does not diagnose illness or reliably predict whether you will get infections.'),
+        'GG': ('This genotype is associated with being a secretor, meaning certain blood-group-related sugars can appear in body fluids.', 'It does not diagnose illness or reliably predict whether you will get infections.'),
+    },
+    'skin': {
+        'AA': ('You have two copies of a DNA letter associated with lighter pigmentation in some populations.', 'Skin tone depends on many genes and cannot be determined from this one result.'),
+        'AG': ('You have one copy of a DNA letter associated with lighter pigmentation in some populations.', 'Skin tone depends on many genes and cannot be determined from this one result.'),
+        'GG': ('You do not carry the lighter-pigmentation-associated letter at this particular marker.', 'This does not determine your skin color or ancestry.'),
+    },
+}
+
+def everyday_result(trait, result):
+    """Return an accessible explanation without making unsupported predictions."""
+    genotype = result.get('genotype', '')
+    if result.get('status') not in ('Marker observed',):
+        if trait['id'] == 'cftr' and 'observed' in result.get('status', '').lower():
+            return ('Your raw DNA suggests a specific CFTR variant may be present. A clinical laboratory needs to confirm it.', 'Carrier status can matter when planning a pregnancy, but raw consumer DNA is not a medical test.')
+        return ('There is not enough reliable information here to say how this gene affects you personally.', 'Finding a DNA marker does not automatically mean you have a noticeable trait.')
+    return EVERYDAY_EXPLANATIONS.get(trait['id'], {}).get(genotype, (
+        'This is a research marker, but your DNA result does not support a reliable everyday prediction.',
+        'The gene may have a known biological role without telling us what you will experience.'
+    ))
+
 # Genotype-specific, reviewed educational headlines. The exact genotype is
 # normalized by the parser and must match a reviewed allele mapping.
 PERSONAL_HEADLINES = {
@@ -63,4 +115,4 @@ def plain_result(trait, result, uploaded):
     else:
         headline = 'No reliable personal prediction from this marker'
         meaning = 'Your file contains this marker, but the scientific evidence is not sufficient for a meaningful individual prediction. The raw genotype remains available in DNA details.'
-    return {'name': name, 'intro': intro, 'context': context, 'headline': headline, 'meaning': meaning}
+    return {'name': name, 'intro': intro, 'context': context, 'headline': headline, 'meaning': meaning, 'everyday': everyday_result(trait, result)}

@@ -67,7 +67,7 @@ else:
     st.info('To explore your own results, read the upload notice, check the consent box, and upload your AncestryDNA file. You can also browse the educational library without uploading.')
 
 category_list = list(CAT_ICONS)
-page = st.radio('Explore', ['My Genetic Highlights', 'Genetic Geography', 'Trait browser', 'Gene & variant search', 'FAQ', 'About & privacy'], horizontal=True)
+page = st.radio('Explore', ['My Genetic Highlights', 'Genetic Origins & Population History', 'Trait browser', 'Gene & variant search', 'FAQ', 'About & privacy'], horizontal=True)
 
 if page == 'My Genetic Highlights':
     st.subheader('⭐ My Genetic Highlights')
@@ -88,6 +88,9 @@ if page == 'My Genetic Highlights':
                 st.markdown(f"**{CAT_ICONS[t['category']]} {v['name']}** · {t['evidence']}")
                 st.markdown(f"### {v['headline']}")
                 st.write(v['meaning'])
+                st.markdown('**What this means in everyday life**')
+                st.write(v['everyday'][0])
+                st.caption(v['everyday'][1])
                 if t['category'] == 'Health Genetics':
                     st.warning('Unconfirmed raw-array finding. Use clinical testing and genetic counseling for medical or reproductive decisions.')
                 with st.expander('Why this matters / DNA details'):
@@ -103,8 +106,18 @@ if page == 'My Genetic Highlights':
             for item in unavailable:
                 st.write(f"{item['trait']['gene']} · {item['trait']['rsid']} · {item['result']['status']}")
 
-elif page == 'Genetic Geography':
-    st.subheader('🌍 Genetic Geography')
+elif page == 'Genetic Origins & Population History':
+    st.subheader('🌍 Genetic Origins & Population History')
+    st.markdown('### Your combined genetic profile')
+    if calls:
+        st.info(f'Your file contains {len(calls):,} usable SNP calls. A meaningful combined geographic comparison requires a separately validated ancestry-informative reference panel, genome-build/strand checks, and statistical calibration. **No ancestry or geographic-exposure estimate has been calculated.**')
+    else:
+        st.info('Upload your DNA to prepare for a future multi-marker population comparison. No ancestry estimate is available yet.')
+    st.write('**Why not just average all the markers?** Our 59 curated markers were chosen for traits, not ancestry. Combining their regional frequencies would be biased and could produce a convincing-looking but false map. Even with an ancestry model, DNA can suggest population similarity, not where you personally lived or which environments you encountered.')
+    with st.expander('Research explorer: frequencies for one marker (not your ancestry)'):
+        st.caption('The tool below is for learning about one marker. It is not used to calculate geographic origins.')
+    st.divider()
+    st.markdown('### Individual-marker population frequencies (educational)')
     st.write('Explore **how common an individual DNA letter is in reference samples** from different populations. This is NOT a map of your ancestry, ethnicity, birthplace, or family origin.')
     st.caption('Population frequencies are requested from the public Ensembl API only after you click Load. The app sends the selected rsID, not your uploaded DNA or genotype.')
     candidates = [t for t in TRAITS if t.get('rsid', '').startswith('rs')]
@@ -160,6 +173,9 @@ elif page == 'Trait browser':
         with st.expander(f"{CAT_ICONS[t['category']]} {view['name']}"):
             st.markdown(f"### {view['headline']}")
             st.write(view['meaning'])
+            st.markdown('**In plain English**')
+            st.write(view['everyday'][0])
+            st.caption(view['everyday'][1])
             if calls:
                 st.caption(f"Your genotype: {result['genotype']} · Evidence: {t['evidence']}")
             st.markdown('**What does this gene do?**')
@@ -188,6 +204,9 @@ elif page == 'Gene & variant search':
                 st.subheader(view['name'])
                 st.markdown(f"**{view['headline']}**")
                 st.write(view['meaning'])
+                st.markdown('**In plain English**')
+                st.write(view['everyday'][0])
+                st.caption(view['everyday'][1])
                 if calls:
                     st.caption(f"Your genotype: {r['genotype']} · Evidence: {t['evidence']}")
                 if t.get('variant_name'):

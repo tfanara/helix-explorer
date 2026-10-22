@@ -74,3 +74,7 @@ The trait browser and gene search now use curated genotype-specific headlines fo
 - **My Genetic Highlights** is the new landing page. It shows only curated, genotype-specific findings (and a separately labeled unconfirmed CFTR finding when applicable). It does not rank disease risk or treat absence of a variant as a health finding. Other exploratory and unavailable markers remain accessible.
 - **Genetic Geography** retrieves allele frequencies for a selected rsID and DNA letter from the Ensembl variation REST API on demand. Only a public rsID is transmitted; uploaded DNA and genotypes are not sent to Ensembl. It plots reference sample locations (approximate) and frequencies; it does **not** infer ancestry percentages, ethnicity, nationality, or personal geographic origin.
 - Population data require a working internet connection on the app server and are not guaranteed to be available for every variant/allele. Values are not precomputed or invented.
+
+
+## Genetic origins and everyday descriptions
+The highlights, trait browser and gene search now include everyday-language interpretations for selected reviewed genotypes. The geographic screen distinguishes the user's many SNPs from a validated ancestry analysis: **it does not claim to calculate geographic origin**. Its individual-marker frequency viewer remains educational. A real multi-marker model requires appropriately licensed population reference genotypes, QC, ancestry-informative SNP selection, allele harmonization, validation, and uncertainty estimates.
