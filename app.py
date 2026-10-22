@@ -5,6 +5,8 @@ from dna.parser import parse_upload
 from dna.engine import load_traits, interpret, CAT_ICONS
 from dna.presentation import plain_result
 from dna.result_context import genotype_comparison, numeric_context
+from dna.trait_geography import genotype_alleles, frequency_summary, frequency_explanation
+from dna.geography import fetch_frequencies
 from dna.faq import CATEGORIES as FAQ_CATEGORIES, search_faq
 from dna.highlights import build_highlights
 from dna.origins_view import make_map_rows, make_support_rows
@@ -31,6 +33,9 @@ with st.sidebar:
         key='dna_file',
     )
     if st.button('Clear my DNA and restart', use_container_width=True):
+        for key in list(st.session_state):
+            if key.startswith('trait_geo_'):
+                st.session_state.pop(key, None)
         for key in ('calls', 'stats', 'upload_identity', 'dna_file', 'dna_consent', 'geography_result', 'ancestry_result', 'ancestry_reference_identity'):
             st.session_state.pop(key, None)
         st.rerun()
@@ -46,6 +51,9 @@ if uploaded is not None and consent:
             st.session_state['calls'] = calls
             st.session_state['stats'] = dict(stats)
             st.session_state['upload_identity'] = identity
+            for key in list(st.session_state):
+                if key.startswith('trait_geo_'):
+                    st.session_state.pop(key, None)
         except (ValueError, OSError, UnicodeError) as exc:
             for key in ('calls', 'stats', 'upload_identity'):
                 st.session_state.pop(key, None)
@@ -83,6 +91,53 @@ def show_personal_context(trait, result):
     st.write(numeric_context(trait))
     st.caption('Genotypes are shown in the allele orientation used by this app. These are associations, not guarantees.')
 
+@st.cache_data(ttl=86400, show_spinner=False)
+def cached_trait_frequencies(rsid, allele):
+    # Public variant identifier only; never send uploaded genotype or file.
+    return fetch_frequencies(rsid, allele)
+
+
+def show_trait_geography(trait, result):
+    """Optional, sourced reference-frequency map in individual result cards."""
+    alleles = genotype_alleles(result.get('genotype'))
+    rsid = str(trait.get('rsid', ''))
+    if not alleles or not rsid.startswith('rs'):
+        return
+    with st.expander('🌍 Where is this genetic variation found?'):
+        st.write('Explore how often a DNA letter from your result appears in studied reference populations. '
+                 'This is **population context**, not a test of where your ancestors came from.')
+        selected = st.selectbox('DNA letter to compare', alleles, key=f"geo_allele_{trait['id']}",
+                                help='If your genotype has two different letters, you can compare either one.')
+        st.caption(f"Your genotype: {result['genotype']} · Variant: {rsid} · Selected letter: {selected}")
+        if st.button('Show population frequencies and map', key=f"geo_fetch_{trait['id']}"):
+            with st.spinner('Loading published reference-population data…'):
+                try:
+                    rows = cached_trait_frequencies(rsid, selected)
+                    st.session_state[f"trait_geo_{trait['id']}"] = (selected, rows)
+                except (RuntimeError, ValueError) as exc:
+                    st.warning(str(exc))
+        saved = st.session_state.get(f"trait_geo_{trait['id']}")
+        if saved and saved[0] == selected:
+            rows = frequency_summary(saved[1])
+            if not rows:
+                st.info('No compatible reference-population frequency data was returned for this DNA letter.')
+                return
+            st.markdown('**Where this allele is more common in the sampled populations**')
+            st.write(frequency_explanation(selected, result['genotype'], rows))
+            plot = pd.DataFrame(rows)
+            st.bar_chart(plot.set_index('Population')['Frequency (%)'], horizontal=True)
+            st.markdown('**Reference sample locations**')
+            st.caption('Dots mark approximate locations associated with sampled populations, not the origins of this allele. '
+                       'Some populations were sampled outside their ancestral region.')
+            st.map(plot.rename(columns={'Latitude': 'lat', 'Longitude': 'lon'})[['lat', 'lon']])
+            with st.expander('View percentages, population names, and data source'):
+                st.dataframe(plot[['Population', 'Region', 'Frequency (%)', 'Source']],
+                             hide_index=True, use_container_width=True)
+            st.caption('Source: Ensembl variation API / 1000 Genomes Phase 3, when available. '
+                       'Frequencies are allele frequencies, not genotype frequencies or trait probabilities. '
+                       'Only the public rsID is requested; your DNA file is not sent to Ensembl.')
+
+
 if page == 'My Genetic Highlights':
     st.subheader('⭐ My Genetic Highlights')
     st.caption('Prioritized, genotype-specific educational findings. These are not ranked by health importance, rarity, or medical risk.')
@@ -106,6 +161,7 @@ if page == 'My Genetic Highlights':
                 st.write(v['everyday'][0])
                 st.caption(v['everyday'][1])
                 show_personal_context(t, r)
+                show_trait_geography(t, r)
                 if t['category'] == 'Health Genetics':
                     st.warning('Unconfirmed raw-array finding. Use clinical testing and genetic counseling for medical or reproductive decisions.')
                 with st.expander('Why this matters / DNA details'):
@@ -203,6 +259,7 @@ elif page == 'Trait browser':
             st.write(view['everyday'][0])
             st.caption(view['everyday'][1])
             show_personal_context(t, result)
+            show_trait_geography(t, result)
             if calls:
                 st.caption(f"Your genotype: {result['genotype']} · Evidence: {t['evidence']}")
             st.markdown('**What does this gene do?**')
@@ -235,6 +292,7 @@ elif page == 'Gene & variant search':
                 st.write(view['everyday'][0])
                 st.caption(view['everyday'][1])
                 show_personal_context(t, r)
+                show_trait_geography(t, r)
                 if calls:
                     st.caption(f"Your genotype: {r['genotype']} · Evidence: {t['evidence']}")
                 if t.get('variant_name'):

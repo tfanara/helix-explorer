@@ -90,3 +90,6 @@ Upload AncestryDNA once. In Genetic Origins, click **Compare my DNA with referen
 
 ## Geographic map refresh
 The geography page now focuses entirely on the combined-marker comparison. The single-variant explorer was removed from this page. Map circles are approximate reference population anchors; bar chart percentages are **bootstrap top-rank consistency**, not ancestry mixture estimates. A valid ancestry percentage model has not been implemented.
+
+### Trait-level geography (new)
+Each interpreted result now has an optional **Where is this genetic variation found?** panel. Select an allele present in the uploaded genotype and click to retrieve 1000 Genomes Phase 3 allele frequencies via Ensembl, view a percentage chart and a map of reference sample locations. No additional uploads. Only the public rsID and allele are used for the public lookup, not the user's DNA file. This does not estimate personal ancestry, exact genotype frequency, or trait probability. Internet access to Ensembl is required, and some variants lack data.

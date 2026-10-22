@@ -29,3 +29,5 @@ The new multi-marker comparison needs a vetted GRCh37 forward-strand population 
 
 
 No additional reference CSV upload is required. Genetic Origins uses the public Ensembl GRCh37 service on demand. Check availability on the hosted app; live requests were not tested in the offline build environment.
+
+Trait cards now have optional on-demand reference-population maps. These need the hosted server to reach Ensembl; no additional user file upload is needed.
