@@ -4,6 +4,7 @@ import pandas as pd
 from dna.parser import parse_upload
 from dna.engine import load_traits, interpret, CAT_ICONS
 from dna.presentation import plain_result
+from dna.result_context import genotype_comparison, numeric_context
 from dna.faq import CATEGORIES as FAQ_CATEGORIES, search_faq
 from dna.highlights import build_highlights
 from dna.origins_view import make_map_rows, make_support_rows
@@ -70,6 +71,18 @@ else:
 category_list = list(CAT_ICONS)
 page = st.radio('Explore', ['My Genetic Highlights', 'Genetic Origins & Population History', 'Trait browser', 'Gene & variant search', 'FAQ', 'About & privacy'], horizontal=True)
 
+
+def show_personal_context(trait, result):
+    """Explain alternatives and numerical limits next to each interpreted finding."""
+    rows = genotype_comparison(trait, result)
+    if not rows:
+        return
+    st.markdown('**How your genotype compares with the alternatives**')
+    st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+    st.markdown('**What can we say about percentages?**')
+    st.write(numeric_context(trait))
+    st.caption('Genotypes are shown in the allele orientation used by this app. These are associations, not guarantees.')
+
 if page == 'My Genetic Highlights':
     st.subheader('⭐ My Genetic Highlights')
     st.caption('Prioritized, genotype-specific educational findings. These are not ranked by health importance, rarity, or medical risk.')
@@ -92,6 +105,7 @@ if page == 'My Genetic Highlights':
                 st.markdown('**What this means in everyday life**')
                 st.write(v['everyday'][0])
                 st.caption(v['everyday'][1])
+                show_personal_context(t, r)
                 if t['category'] == 'Health Genetics':
                     st.warning('Unconfirmed raw-array finding. Use clinical testing and genetic counseling for medical or reproductive decisions.')
                 with st.expander('Why this matters / DNA details'):
@@ -188,6 +202,7 @@ elif page == 'Trait browser':
             st.markdown('**In plain English**')
             st.write(view['everyday'][0])
             st.caption(view['everyday'][1])
+            show_personal_context(t, result)
             if calls:
                 st.caption(f"Your genotype: {result['genotype']} · Evidence: {t['evidence']}")
             st.markdown('**What does this gene do?**')
@@ -219,6 +234,7 @@ elif page == 'Gene & variant search':
                 st.markdown('**In plain English**')
                 st.write(view['everyday'][0])
                 st.caption(view['everyday'][1])
+                show_personal_context(t, r)
                 if calls:
                     st.caption(f"Your genotype: {r['genotype']} · Evidence: {t['evidence']}")
                 if t.get('variant_name'):
