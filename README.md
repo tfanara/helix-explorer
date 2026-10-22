@@ -82,3 +82,7 @@ The highlights, trait browser and gene search now include everyday-language inte
 ## Experimental multi-marker population comparison
 
 The Origins page now includes a **real multi-locus reference-panel comparison engine** (`dna/ancestry.py`). It accepts an external, quality-controlled CSV with `rsid,chromosome,position,allele,population,frequency` columns, aligned to GRCh37 forward-strand calls. It requires at least 30 matching, widely spaced autosomal SNPs and three populations. It compares genotype log-likelihoods and reports reference-panel-relative rankings and marker-bootstrap stability, **not ancestry fractions or exposure history**. It does not provide a built-in reference panel: a vetted reference CSV is required. No reference frequencies are fabricated. Results are research-only and not calibrated as ancestry estimates. The file upload stays on the Streamlit host; no genotype is sent to Ensembl by this module.
+
+
+## Single-upload genetic origins (experimental)
+Upload AncestryDNA once. In Genetic Origins, click **Compare my DNA with reference populations**. The app automatically requests 1000 Genomes Phase 3 population frequencies from Ensembl GRCh37 using public rsIDs only. It does not upload personal genotypes or require a reference CSV. Internet access to Ensembl is required at analysis time; the public service may be slow, unavailable, or provide insufficient comparable SNPs, in which case the app shows no fabricated result. This is an exploratory, nonvalidated single-population fit, not ancestry fractions or geographic exposure.

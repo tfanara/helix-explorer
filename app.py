@@ -7,7 +7,7 @@ from dna.presentation import plain_result
 from dna.faq import CATEGORIES as FAQ_CATEGORIES, search_faq
 from dna.highlights import build_highlights
 from dna.geography import fetch_frequencies
-from dna.ancestry import parse_reference, compare_populations
+from dna.auto_origins import run_auto_comparison
 
 st.set_page_config(page_title='Helix Explorer | DNA Explorer', page_icon='🧬', layout='wide')
 st.markdown('''<style>.block-container{max-width:1150px;padding-top:2rem} .small-note{color:#777;font-size:.85rem}</style>''', unsafe_allow_html=True)
@@ -30,7 +30,7 @@ with st.sidebar:
         key='dna_file',
     )
     if st.button('Clear my DNA and restart', use_container_width=True):
-        for key in ('calls', 'stats', 'upload_identity', 'dna_file', 'dna_consent', 'geography_result', 'ancestry_result', 'ancestry_reference_identity', 'reference_csv'):
+        for key in ('calls', 'stats', 'upload_identity', 'dna_file', 'dna_consent', 'geography_result', 'ancestry_result', 'ancestry_reference_identity'):
             st.session_state.pop(key, None)
         st.rerun()
     st.caption('No user database or intentional raw-DNA disk storage. Uploaded bytes and parsed genotypes may remain in Streamlit session/server memory until cleared or the session expires. Hosting-provider retention is outside this app’s control.')
@@ -112,34 +112,35 @@ elif page == 'Genetic Origins & Population History':
     st.markdown('### Compare your whole DNA profile with reference populations')
     st.write('This research feature combines **at least 30 independent genetic markers** against population allele frequencies. It reports **relative statistical similarity**, not ancestry percentages, ethnicity, geographic exposure, or family origin.')
     st.warning('**Experimental method, not a validated ancestry test.** Results depend strongly on the reference panel and populations included. Mixed ancestry, unequal sampling, genetic linkage and other effects can distort the rankings. Do not interpret the leading population as your origin.')
-    st.caption('A genuine comparison needs a reference frequency panel. The app does not invent one or upload your genotype to an external service. Supply a vetted GRCh37, forward-strand reference CSV, such as frequencies computed from a licensed 1000 Genomes dataset.')
-    with st.expander('Reference file requirements and format'):
-        st.code('rsid,chromosome,position,allele,population,frequency\nrs123,1,123456,A,Population A,0.32\nrs123,1,123456,A,Population B,0.67\nrs123,1,123456,A,Population C,0.45', language='csv')
-        st.write('Columns: rsid, chromosome, GRCh37 position, forward-strand allele, reference population, and allele frequency between 0 and 1. The example above illustrates the format only; **those numbers are fictional and must not be used for analysis**. Use a genome-wide panel with multiple populations and hundreds of valid autosomal loci. Only one marker per 1 Mb window is retained to reduce linkage.')
-        st.write('Source: [1000 Genomes Project](https://www.internationalgenome.org/data) · [Ensembl variation](https://rest.ensembl.org/documentation/info/variation_id). Reference panels must be harmonized and quality controlled before use.')
-    ref_upload = st.file_uploader('Upload a vetted population reference frequency CSV', type=['csv'], key='reference_csv', disabled=not bool(calls))
-    if calls and ref_upload is not None and st.button('Run combined multi-marker comparison', type='primary'):
-        try:
-            reference = parse_reference(ref_upload.getvalue())
-            result = compare_populations(calls, reference)
-            st.session_state['ancestry_result'] = result
-            st.session_state['ancestry_reference_identity'] = (ref_upload.name, hashlib.sha256(ref_upload.getvalue()).hexdigest(), st.session_state.get('upload_identity'))
-        except ValueError as exc:
-            st.session_state.pop('ancestry_result', None)
-            st.error(str(exc))
+    st.write('**Only your AncestryDNA file is needed.** Click the button below to automatically retrieve published population frequencies for multiple markers. The app sends selected public **rsIDs**, not your DNA letters or uploaded file, to Ensembl. The reference service must be online.')
+    st.info('**What this can tell you:** which reference samples best fit the selected markers in this limited experiment. **What it cannot tell you:** ancestry percentages, your ethnicity, exact ancestral locations, or where you have lived. This is not a validated ancestry test, and the markers are not a curated ancestry-informative panel.')
     if not calls:
-        st.info('Upload your DNA first, then provide a real population reference panel to calculate a multi-marker comparison.')
-    if calls and ref_upload is not None:
-        identity = (ref_upload.name, hashlib.sha256(ref_upload.getvalue()).hexdigest(), st.session_state.get('upload_identity'))
-        result = st.session_state.get('ancestry_result') if st.session_state.get('ancestry_reference_identity') == identity else None
-        if result:
-            st.success(f"Compared {result['markers']} position-matched, widely spaced SNPs across {result['population_count']} reference populations.")
-            st.write('**Closest matches in this specific reference panel**')
-            st.dataframe(pd.DataFrame(result['rows']), hide_index=True, use_container_width=True)
-            st.bar_chart(pd.DataFrame(result['rows']).set_index('Population')['Relative log-likelihood'], horizontal=True)
-            st.caption('Relative log-likelihood: 0 is the best fit among included populations; negative values indicate worse fits. Bootstrap top-rank frequency is how often a population ranked first across repeated marker resamples, **not a probability of ancestry**.')
-            st.write('**Markers excluded during quality checks**', result['rejected'])
-            st.info('This model assumes a single reference population and cannot estimate admixture. A person with ancestors from multiple populations may match none of these references well. A validated ancestry model would require further work.')
+        st.info('Upload your AncestryDNA file in the sidebar to enable the automatic comparison.')
+    elif st.button('Compare my DNA with reference populations', type='primary'):
+        with st.spinner('Requesting public reference frequencies and comparing markers. This may take a minute…'):
+            try:
+                result = run_auto_comparison(calls)
+                st.session_state['ancestry_result'] = result
+                st.session_state['ancestry_reference_identity'] = st.session_state.get('upload_identity')
+            except ValueError as exc:
+                st.session_state.pop('ancestry_result', None)
+                st.error(str(exc))
+            except Exception:
+                st.session_state.pop('ancestry_result', None)
+                st.error('Could not complete the public reference lookup. Please retry later; no additional file upload is needed.')
+    result = st.session_state.get('ancestry_result') if st.session_state.get('ancestry_reference_identity') == st.session_state.get('upload_identity') and calls else None
+    if result:
+        st.success(f"Compared {result['markers']} widely spaced SNPs across {result['population_count']} reference samples.")
+        st.markdown('### Closest statistical matches in this reference panel')
+        best = result['rows'][0]
+        st.write(f"**Closest match in this experiment:** {best['Population']}. This does **not** mean your ancestry comes from that population. It means this reference sample best fits the selected markers among those compared.")
+        st.dataframe(pd.DataFrame(result['rows']), hide_index=True, use_container_width=True)
+        st.bar_chart(pd.DataFrame(result['rows']).set_index('Population')['Relative log-likelihood'], horizontal=True)
+        st.markdown('**Understanding the numbers**')
+        st.write('**Relative log-likelihood:** 0 marks the best-fitting population in this comparison; more negative values fit worse. These are not percentages. **Bootstrap top-rank frequency:** how often a population came first when markers were randomly resampled; it is not your probability of having ancestry from that group.')
+        st.caption(f"Requested {result['requested_markers']} public marker identifiers; {result['reference_markers']} had comparable reference data. Unavailable API batches: {result['failed_batches']}.")
+        st.warning('The method assumes one reference population and cannot model mixed ancestry. Reference samples are limited, and randomly selected genome-wide SNPs are not a validated ancestry panel. Do not use these rankings to infer ethnicity, nationality, or personal geographic exposure.')
+    st.caption('Reference: Ensembl GRCh37 REST API, 1000 Genomes Phase 3 allele frequencies. The analysis only runs on request. A service outage or insufficient matched data yields no result rather than invented estimates.')
     st.divider()
     with st.expander('Research explorer: frequencies for one marker (not your ancestry)'):
         st.caption('The tool below is for learning about one marker. It is not used to calculate geographic origins.')
@@ -284,7 +285,7 @@ else:
     st.write('**Public upload beta:** files are transmitted to the Streamlit hosting server over HTTPS when deployed with HTTPS. This app does not intentionally save raw DNA to a database, write uploads to disk, send genotypes to an AI API, or create accounts. Streamlit retains upload bytes and parsed genotypes in server/session memory, potentially until session expiry. Clearing your profile removes app session references but cannot guarantee immediate memory erasure or control provider backups, logs, or telemetry. Do not upload another person’s DNA without authorization.')
     st.write('Only AncestryDNA-style tab-delimited files are supported. Calls with insertion/deletion encodings are skipped. Genome build, allele strand, variant annotation, and source citations must be validated before interpreting new markers.')
     st.write('The knowledge base is intentionally small and illustrative. A marker not tested, or not included in this library, does not indicate a normal result. Confirm any potentially important result with a qualified clinician and accredited laboratory.')
-    st.write('Genetic Geography shows external population allele frequencies, not ancestry inference. No ancestry percentages, risk scores, drug dosing, or comprehensive carrier screening are provided.')
+    st.write('Genetic Origins offers an experimental, automatic multi-marker population comparison using public reference frequencies; it is not validated ancestry inference. No ancestry percentages, risk scores, drug dosing, or comprehensive carrier screening are provided.')
 
 if calls:
     st.divider()

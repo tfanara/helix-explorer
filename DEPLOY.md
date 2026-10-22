@@ -26,3 +26,6 @@ git push origin main
 ```
 
 The new multi-marker comparison needs a vetted GRCh37 forward-strand population frequency CSV uploaded in the Origins page; it does not automatically infer ancestry without one. See README for the CSV schema and limitations.
+
+
+No additional reference CSV upload is required. Genetic Origins uses the public Ensembl GRCh37 service on demand. Check availability on the hosted app; live requests were not tested in the offline build environment.
